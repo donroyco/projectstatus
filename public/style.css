@@ -1,0 +1,16 @@
+body {
+	margin: 50px 50px;
+	background: #fff;
+}
+li { 
+	list-style-type:none; 
+} 
+
+#bambooStatusIndicator {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+#bambooStatusIndicator.ok {
+	backcolor: green
+}
