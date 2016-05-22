@@ -1,0 +1,24 @@
+{
+  "name": "projectstatus",
+  "description": "Using Raspberries GPIO and lights to display a projects health and build status",
+  "keywords": [
+    "GPIO",
+    "Bamboo",
+    "raspberry Pi"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PtrWlp/projectstatus.git"
+  },
+  "author": {
+    "name": "Peter Welp"
+  },
+  "version": "0.0.1",
+  "main": "main",
+  "dependencies": {
+    "express": "^4.13.4",
+    "onoff": "^1.1.0",
+    "socket.io": "^1.4.6"
+  }
+}
