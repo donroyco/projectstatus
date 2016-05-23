@@ -1,16 +1,33 @@
 body {
 	margin: 50px 50px;
 	background: #fff;
+	font-family: monospace;
 }
 li { 
 	list-style-type:none; 
 } 
+button {
+	margin: 10px;
+	background: grey;
+	font-size: 1.2em;
+	color: white;
+}
 
 #bambooStatusIndicator {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
+	display: inline-block;
+	background: #F2F2F2;
+    top: 7px;
+    position: relative;	
 }
 #bambooStatusIndicator.ok {
-	backcolor: green
+	background: #14892c;
+}
+#bambooStatusIndicator.building {
+	background: #3572b0;
+}
+#bambooStatusIndicator.failed {
+	background: #d04437;
 }

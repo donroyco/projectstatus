@@ -1,42 +1,53 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-	<title>LED Controller</title>
+	<title>ProjectStatus</title>
 	<meta name="viewport" content="width=400px" />
 	
 	<script src="socket.io/socket.io.js"></script>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="bootstrap-responsive.css">
   </head>
   <body>
-	<H2>BAMBOO</H2>
-	<div id="bambooStatusIndicator" />
-	<ul>
-	<li>
-		<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="ok" />Ok
-	</li>
-	<li>
-		<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="building" />Building
-	</li>
-	<li>
-		<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="failed" />Failed
-	</li>
-	</ul>
+  <div id="main" class="container">
 
-	<H2>BACKEND</H2>
-	<ul>
-	<li>
-		<input type="radio" name="backend" onclick="setBackendStatus(this);" value="up" />Up & Running
-	</li>
-	<li>
-		<input type="radio" name="backend" onclick="setBackendStatus(this);" value="shaky" />Shaky
-	</li>
-	<li>
-		<input type="radio" name="backend" onclick="setBackendStatus(this);" value="down" />Down
-	</li>
-	</ul>
+	  <div class="row">
+		<div class="span6">
 
+			<h2>BAMBOO <span id="bambooStatusIndicator"></span></h2>
+			<ul>
+			<li>
+				<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="ok" />Ok
+			</li>
+			<li>
+				<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="building" />Building
+			</li>
+			<li>
+				<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="failed" />Failed
+			</li>
+			</ul>
+		</div>
+		<div class="span6">
+
+				<H2>BACKEND</H2>
+				<ul>
+				<li>
+					<input type="radio" name="backend" onclick="setBackendStatus(this);" value="up" />Up & Running
+				</li>
+				<li>
+					<input type="radio" name="backend" onclick="setBackendStatus(this);" value="shaky" />Shaky
+				</li>
+				<li>
+					<input type="radio" name="backend" onclick="setBackendStatus(this);" value="down" />Down
+				</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<h2>Bluey feedback (5 seconds)</h2>
 	<span id="outputText">status</span><br>
-	<button onclick="quitAll();">Quit</button>
+	<button onclick="quitAll();">Quit process</button>
 	
 	<script type="text/javascript">
 		var socket = io.connect();
@@ -47,7 +58,7 @@
 		
 		function setBambooStatus(statusBamboo) {
 			socket.emit('bamboo', { value: statusBamboo.value });
-			document.getElementById("bambooStatusIndicator").removeClass('ok building failed').addClass(statusBamboo.value);
+			document.getElementById("bambooStatusIndicator").className = statusBamboo.value;
 		}
 
 		function setBackendStatus(statusBackend) {
