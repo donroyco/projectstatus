@@ -1,16 +1,29 @@
 var express = require('express');
 app = express();
 server = require('http').createServer(app);
+
 var io = require('socket.io').listen(server);
 server.listen(8080);
 app.use(express.static('public'));		
 
 var projectStatus = require('./projectstatus');
 
+var bambooStatusService = require('./bamboostatus');
+
 var bambooStatus = 'unknown';
 var serverStatus = 'unknown';
 
 var ticker = setInterval(function() {
+
+	update();
+
+}, 20000);
+
+
+function update () {
+
+	bambooStatus = bambooStatusService.getBambooStatus();
+
 	var statusMessage = 'bamboo: ' + 
 			    		bambooStatus + 
                         ' health: ' + 
@@ -23,8 +36,8 @@ var ticker = setInterval(function() {
 		//projectStatus.ringBell();
 	}
 	projectStatus.setHealthStatus(serverStatus);
+};
 
-}, 20000);
 
 io.sockets.on('connection', function (socket) {
 	socket.on('bamboo', function (data) {
@@ -49,3 +62,4 @@ io.sockets.on('connection', function (socket) {
 });
 
 console.log("running");
+update();
