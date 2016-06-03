@@ -20,11 +20,11 @@ var ticker = setInterval(function() {
 
 	projectStatus.setBambooStatus(bambooStatus);
 	if (bambooStatus === 'failed' || serverStatus === 'down') {
-		projectStatus.ringBell();
+		//projectStatus.ringBell();
 	}
 	projectStatus.setHealthStatus(serverStatus);
 
-}, 5000);
+}, 20000);
 
 io.sockets.on('connection', function (socket) {
 	socket.on('bamboo', function (data) {
