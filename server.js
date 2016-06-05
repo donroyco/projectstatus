@@ -6,7 +6,13 @@ var io = require('socket.io').listen(server);
 server.listen(8080);
 app.use(express.static('public'));		
 
-var projectStatus = require('./projectstatus');
+var projectStatus = require('./projectstatususb');
+
+projectStatus.allOff();
+
+process.exit(); 
+
+// that was quick
 
 var bambooStatusService = require('./bamboostatus');
 

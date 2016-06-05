@@ -1,0 +1,5 @@
+# udev rules to allow write access to all users
+# for specific usb relay board
+# convert vendorid to hex!
+# sudo cp udev_5824.rules /etc/udev/rules.d
+SUBSYSTEM=="usb", ATTR{idVendor}=="16c0", MODE="0666"
