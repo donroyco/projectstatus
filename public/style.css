@@ -13,21 +13,28 @@ button {
 	color: white;
 }
 
-#bambooStatusIndicator {
+#bambooStatusIndicator,
+#backendStatusIndicator {
 	width: 30px;
 	height: 30px;
+	border: 1px solid grey;
 	border-radius: 50%;
 	display: inline-block;
 	background: #F2F2F2;
     top: 7px;
     position: relative;	
 }
-#bambooStatusIndicator.ok {
+#bambooStatusIndicator.ok,
+#backendStatusIndicator.up {
 	background: #14892c;
 }
 #bambooStatusIndicator.building {
 	background: #3572b0;
 }
-#bambooStatusIndicator.failed {
+#backendStatusIndicator.shaky {
+	background: #ffff00;
+}
+#bambooStatusIndicator.failed, 
+#backendStatusIndicator.down {
 	background: #d04437;
 }

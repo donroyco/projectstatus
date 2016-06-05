@@ -13,64 +13,46 @@
 
 	  <div class="row">
 		<div class="span6">
-
 			<h2>BAMBOO <span id="bambooStatusIndicator"></span></h2>
-			<ul>
-			<li>
-				<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="ok" />Ok
-			</li>
-			<li>
-				<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="building" />Building
-			</li>
-			<li>
-				<input type="radio" name="bamboo" onclick="setBambooStatus(this);" value="failed" />Failed
-			</li>
-			</ul>
+			<button onclick="setBambooStatus('ok');">Ok</button>
+			<button onclick="setBambooStatus('building');">Building</button>
+			<button onclick="setBambooStatus('failed');">Failed</button>
 		</div>
 		<div class="span6">
-
-				<H2>BACKEND</H2>
-				<ul>
-				<li>
-					<input type="radio" name="backend" onclick="setBackendStatus(this);" value="up" />Up & Running
-				</li>
-				<li>
-					<input type="radio" name="backend" onclick="setBackendStatus(this);" value="shaky" />Shaky
-				</li>
-				<li>
-					<input type="radio" name="backend" onclick="setBackendStatus(this);" value="down" />Down
-				</li>
-				</ul>
-			</div>
+			<H2>BACKEND <span id="backendStatusIndicator"></span></H2>
+			<button onclick="setBackendStatus('up');">Up & Running</button>
+			<button onclick="setBackendStatus('shaky');">Shaky</button>
+			<button onclick="setBackendStatus('down');">Down</button>
 		</div>
 	</div>
-	<hr>
-	<h2>Bluey feedback (5 seconds)</h2>
-	<span id="outputText">status</span><br>
-	<button onclick="quitAll();">Quit process</button>
+</div>
+<hr>
+<button onclick="quitAll();">Quit process</button>
+
+<script type="text/javascript">
+	var socket = io.connect();
 	
-	<script type="text/javascript">
-		var socket = io.connect();
-		
-		socket.on('status', function (data) {
-			document.getElementById("outputText").innerHTML = data.value;
-		});
-		
-		function setBambooStatus(statusBamboo) {
-			socket.emit('bamboo', { value: statusBamboo.value });
-			document.getElementById("bambooStatusIndicator").className = statusBamboo.value;
-		}
+	socket.on('lightBamboo', function (data) {
+		document.getElementById("bambooStatusIndicator").className = data.value;
+	});
+	
+	socket.on('lightBackend', function (data) {
+		document.getElementById("backendStatusIndicator").className = data.value;
+	});
+	
+	function setBambooStatus(statusBamboo) {
+		socket.emit('bamboo', { value: statusBamboo });
+	}
 
-		function setBackendStatus(statusBackend) {
-			socket.emit('backend', { value: statusBackend.value });
-		}
+	function setBackendStatus(statusBackend) {
+		socket.emit('backend', { value: statusBackend });
+	}
 
-		function quitAll()
-		{
-			document.getElementById("outputText").innerHTML='quitting';
-			socket.emit('quitAll', {});
-		}
+	function quitAll()
+	{
+		socket.emit('quitAll', {});
+	}
 
-	</script>
-  </body>
+</script>
+</body>
 </html>
