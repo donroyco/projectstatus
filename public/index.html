@@ -53,6 +53,11 @@
 		socket.emit('quitAll', {});
 	}
 
+	socket.on('allOff', function (data) {
+		document.getElementById("bambooStatusIndicator").className = '';
+		document.getElementById("backendStatusIndicator").className = '';
+	});
+
 </script>
 </body>
 </html>

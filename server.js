@@ -61,7 +61,7 @@ io.sockets.on('connection', function (socket) {
 		console.log("quitting");
 		projectStatus.allOff();
 		
-		io.sockets.emit('led', {value: 'off'});
+		io.sockets.emit('allOff', '');	
 		server.close();	
 		process.exit();
 	});
