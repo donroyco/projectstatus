@@ -1,9 +1,13 @@
+var projectName = 'MYWP-MYWPD';
+var socketPort = 8081;
+
+
 var express = require('express');
 app = express();
 server = require('http').createServer(app);
 
 var io = require('socket.io').listen(server);
-server.listen(8081);
+server.listen(socketPort);
 app.use(express.static('public'));		
 
 var projectStatus = require('./projectstatus');
@@ -28,7 +32,8 @@ var ticker = setInterval(function() {
 
 function update () {
 
-	//bambooStatus = bambooStatusService.getBambooStatus();
+	bambooStatus = bambooStatusService.getBambooStatus(projectName);
+	console.log(bambooStatus, ' via interface');
 
 	var statusMessage = 'bamboo: ' + 
 			    bambooStatus + 
