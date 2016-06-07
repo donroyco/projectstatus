@@ -7,6 +7,42 @@ module.exports = {
     getBambooStatus: getBambooStatus
 };
 
+// When running, https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=MYWP-MYWPD returns:
+// {
+//     "status": "OK",
+//     "builds": [{
+//         "status": "BUILDING",
+//         "messageType": "PROGRESS",
+//         "messageText": "Building for 26 secs. 21 mins remaining",
+//         "hasReadPermission": true,
+//         "hasBuildPermission": true,
+//         "itemType": "BUILD",
+//         "resultKey": "MYWP-MYWPD-1392",
+//         "buildResultKey": "MYWP-MYWPD-1392",
+//         "planKey": "MYWP-MYWPD",
+//         "projectName": "MyWeb",
+//         "chainName": "myweb continuous delivery",
+//         "planName": "MyWeb - myweb continuous delivery",
+//         "buildNumber": 1392,
+//         "isBranch": false,
+//         "triggerReason": "Updated by Peter Welp <peter.welp@klm.com>",
+//         "percentageComplete": 1,
+//         "stage": {
+//             "name": "Build",
+//             "number": 1,
+//             "totalStages": 2
+//         }
+//     }]
+// }
+// or it returns
+// {
+//     "status": "OK",
+//     "builds": []
+// }
+// or it might even return 
+// { "status": "NOT OK? " } ofzo
+
+
 function getBambooStatus(projectName) {
 
 	var client = new Client();
