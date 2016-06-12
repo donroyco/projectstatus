@@ -21,10 +21,12 @@ relay.on("data", function(data) {
 relay.write([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 relay.write([1, 1, 1, 1, 1, 1, 1, 1]);
 
-//var deviceInfo = relay.getDeviceInfo();
-//console.log("deviceInfo.manufacturer:", deviceInfo.manufacturer);
-//console.log("deviceInfo.product:", deviceInfo.product);
-//console.log("deviceInfo.serialNumber:", deviceInfo.serialNumber);
+console.log(relay);
+
+// var deviceInfo = relay.getDeviceInfo();
+// console.log("deviceInfo.manufacturer:", deviceInfo.manufacturer);
+// console.log("deviceInfo.product:", deviceInfo.product);
+// console.log("deviceInfo.serialNumber:", deviceInfo.serialNumber);
 
 relay.close();
 

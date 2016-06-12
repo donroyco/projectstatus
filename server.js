@@ -27,7 +27,7 @@ var ticker = setInterval(function() {
 
 	update();
 
-}, 5000);
+}, 15000);
 
 
 function update () {
