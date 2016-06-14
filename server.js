@@ -19,29 +19,34 @@ projectStatus.allOff();
 // that was quick
 
 var bambooStatusService = require('./bamboostatus');
+//var serverStatusService = require('./serverstatus');
 
-var bambooStatus = 'unknown';
+//var bambooStatus = 'unknown';
 var serverStatus = 'unknown';
 
 var ticker = setInterval(function() {
 
 	update();
 
-}, 30000);
-
+}, 15000);
 
 function update () {
 
-	bambooStatus = bambooStatusService.getBambooStatus(projectName);
-	console.log(bambooStatus, ' via interface');
+	bambooStatusService.getBambooStatus(projectName)
+	.then(processBambooStatus); 
+
+	//serverStatusService.getBambooStatus(projectName)
+	//.then(processBambooStatus); 
+};
+
+function processBambooStatus(bambooStatus) {
 
 	var statusMessage = 'bamboo: ' + 
-			    bambooStatus + 
-                        ' health: ' + 
-                        serverStatus;
+	    				bambooStatus + 
+                		' health: ' + 
+                		serverStatus;
 	console.log(statusMessage);
-//	io.sockets.emit('status', {value: statusMessage});	
-
+	//	io.sockets.emit('status', {value: statusMessage});	
 	projectStatus.setBambooStatus(bambooStatus);
 	if (bambooStatus === 'failed' || serverStatus === 'down') {
 		//projectStatus.ringBell();
@@ -50,13 +55,13 @@ function update () {
 
 	io.sockets.emit('lightBamboo', {value: bambooStatus});	
 	io.sockets.emit('lightBackend', {value: serverStatus});	
-};
+}
 
 
 io.sockets.on('connection', function (socket) {
 	socket.on('bamboo', function (data) {
 		console.log("bamboo found " + data.value);
-		bambooStatus = data.value;
+		processBambooStatus(data.value);
 	}); 
 	socket.on('backend', function (data) {
 		console.log("backend found " + data.value);
