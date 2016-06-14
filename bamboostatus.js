@@ -11,7 +11,7 @@ function getBambooStatus(projectName) {
 	// see if building
     requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
     .then(function (bamboo) {
-    	if (bamboo.builds.length !== 0) {
+    	if (bamboo.builds[0].status === 'BUILDING') {
             defer.resolve('building');
     	} else {
     		// see list of last builds
