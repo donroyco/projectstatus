@@ -28,7 +28,7 @@ module.exports = {
  */
 
 function setBambooStatus(status) {
-	if (status === 'ok') {
+	if (status === 'successful') {
 		ports[0].writeSync(0);
 		ports[1].writeSync(1);
 		ports[2].writeSync(0);
