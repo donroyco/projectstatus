@@ -46,7 +46,7 @@ module.exports = {
  */
 
 function setBambooStatus(status) {
-	if (status === 'ok') {
+	if (status === 'successful') {
 	}
 	if (status === 'building') {
 	}
