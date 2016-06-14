@@ -7,11 +7,11 @@ function getBambooStatus(projectName) {
 
     var defer = q.defer();
 
-	var lastStatus = 'unknown';
-	// see if building
+    var lastStatus = 'unknown';
+    // see if building
     requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
     .then(function (bamboo) {
-    	if (bamboo.builds[0].status === 'BUILDING') {
+    	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
             defer.resolve('building');
     	} else {
     		// see list of last builds
@@ -33,7 +33,7 @@ function getBambooStatus(projectName) {
     .catch(function (err) {
         // parsing failed 
         console.log('error index: ', err);
-        defer.reject(err);
+        defer.resolve('unknown');
     });
 
     return defer.promise;
