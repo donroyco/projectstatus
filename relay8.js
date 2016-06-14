@@ -11,6 +11,7 @@ class Relay8 {
 
     //console.log('Detected devices:', HID.devices(USB_VID, USB_PID));
     this.hid = new HID.HID(USB_VID, USB_PID);
+    console.log(HID.devices(USB_VID, USB_PID));
   }
 
   set(id, state)
@@ -18,7 +19,7 @@ class Relay8 {
     if (typeof id !== 'number') {
       throw `Invalid relay ID type: ${id}`;
     }
-    if (id < 0 || id > 15) {
+    if (id < 0 || id > 7) {
       throw `Invalid relay ID: ${id}`;
     }
     if (typeof state !== 'boolean') {
