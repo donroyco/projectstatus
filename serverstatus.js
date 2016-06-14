@@ -1,7 +1,7 @@
 'use strict';
 
 var requestP = require('request-promise');
-var q = require('q');
+var q = require('./d');
 
 function getBambooStatus(projectName) {
 
@@ -12,12 +12,13 @@ function getBambooStatus(projectName) {
     requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
     .then(function (bamboo) {
     	if (bamboo.builds.length !== 0) {
+			console.log(bamboo.builds);
             defer.resolve('building');
     	} else {
-    		// see list of last builds
+    		// console.log('see list of last builds');
     		requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/rest/api/latest/result/${projectName}.json`))
     		.then(function (lastRuns) {
-	    		// see details of last build
+	    		// console.log('see details of last build');
     			if (lastRuns.results.result[0].link.href) {
     				requestP(uriWithOptionForJason(lastRuns.results.result[0].link.href))
     				.then(function(result) {
@@ -36,6 +37,8 @@ function getBambooStatus(projectName) {
         defer.reject(err);
     });
 
+    console.log('end of module now what');
+    //return lastStatus; // Nonsense of course
     return defer.promise;
 }
 

@@ -19,6 +19,7 @@ projectStatus.allOff();
 // that was quick
 
 var bambooStatusService = require('./bamboostatus');
+//var serverStatusService = require('./serverstatus');
 
 //var bambooStatus = 'unknown';
 var serverStatus = 'unknown';
@@ -34,6 +35,9 @@ function update () {
 
 	bambooStatusService.getBambooStatus(projectName)
 	.then(processBambooStatus); 
+
+	//serverStatusService.getBambooStatus(projectName)
+	//.then(processBambooStatus); 
 };
 
 function processBambooStatus(bambooStatus) {
