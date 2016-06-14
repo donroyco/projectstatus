@@ -42,8 +42,6 @@ function update () {
 
 function processBambooStatus(bambooStatus) {
 
-	console.log(bambooStatus, ' via interface');
-
 	var statusMessage = 'bamboo: ' + 
 	    				bambooStatus + 
                 		' health: ' + 
