@@ -24,7 +24,7 @@ button {
     top: 7px;
     position: relative;	
 }
-#bambooStatusIndicator.ok,
+#bambooStatusIndicator.successful,
 #backendStatusIndicator.up {
 	background: #14892c;
 }
