@@ -1,4 +1,4 @@
-# udev rules to allow write access to all users
+n# udev rules to allow write access to all users
 # for specific usb relay board
 # convert vendorid to hex!
 # sudo cp udev_5824.rules /etc/udev/rules.d
