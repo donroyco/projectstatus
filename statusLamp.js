@@ -58,15 +58,15 @@ StatusLamp.prototype = {
             // Do the exec
             var command = `../crelay/src/crelay ${lampColor} ${state}`;
 
-            var exec = require('child_process').exec;
+            var exec = require('child_process').execSync;
             exec(command, function(error, stdout, stderr) {
-                console.log('stdout: ' + stdout);
-                console.log('stderr: ' + stderr);
+                //console.log('stdout: ' + stdout);
+                //console.log('stderr: ' + stderr);
                 if (error !== null) {
                     console.log('exec error: ' + error);
                 }
             });
-            console.log('port: ', lampColor, ' state: ', state);
+            //console.log('port: ', lampColor, ' state: ', state);
         }
     }
 };
