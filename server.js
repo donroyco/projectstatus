@@ -10,7 +10,7 @@ var io = require('socket.io').listen(server);
 server.listen(socketPort);
 app.use(express.static('public'));		
 
-var projectStatus = require('./projectstatus');
+var projectStatus = require('./display');
 
 projectStatus.allOff();
 
