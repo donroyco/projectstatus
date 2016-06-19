@@ -25,7 +25,7 @@ function getBambooStatus(projectName) {
     					defer.resolve(result.buildState.toLowerCase());
     				})
     			} else {
-                    defer.resolve('unknown');
+                    defer.resolve('error');
                 }
     		})
     	}
@@ -33,7 +33,7 @@ function getBambooStatus(projectName) {
     .catch(function (err) {
         // parsing failed 
         console.log('error index: ', err);
-        defer.resolve('unknown');
+        defer.resolve('error');
     });
 
     return defer.promise;
