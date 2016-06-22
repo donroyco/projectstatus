@@ -43,7 +43,7 @@ function processBambooStatus(bambooStatus) {
 	console.log(statusMessage);
 
 	//	io.sockets.emit('status', {value: statusMessage});	
-	if (lastBambooStatus !== bambooStatus && bambooStatus.toLowerCase() === 'succesful') {
+	if (lastBambooStatus !== bambooStatus && bambooStatus.toLowerCase() === 'successful') {
 		//display.ringBell();
 		console.log('Go all disco');
 		display.allDisco();
