@@ -7,16 +7,18 @@ function getServerStatus() {
 
     var defer = q.defer();
 
-	var lastStatus = 'unknown';
-	console.log('see if building');
-    requestP(`https://www.ute1.klm.com/ams/beta/myweb/api/customer/current`)
-    .then(function (result) {
-        defer.resolve('up');
+    requestP({uri: 'https://www.ute1.klm.com/ams/beta/myweb/api/customer/current', resolveWithFullResponse: true })
+    .then(function (response) {
+        if (response.statusCode && response.statusCode < 400) {
+            defer.resolve('up');
+        } else {
+            defer.resolve('down');
+        }
     })
     .catch(function (err) {
         // parsing failed 
-        console.log('error index: ', err);
-        defer.resolve('down');
+        // console.log('error index: ', err);
+        defer.resolve('error');
     });
 
     return defer.promise;

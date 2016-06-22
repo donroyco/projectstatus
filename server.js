@@ -10,9 +10,9 @@ var io = require('socket.io').listen(server);
 server.listen(socketPort);
 app.use(express.static('public'));		
 
-var projectStatus = require('./display');
+var display = require('./display');
 
-projectStatus.allOff();
+display.allOff();
 
 // process.exit(); 
 
@@ -25,7 +25,7 @@ var ticker = setInterval(function() {
 
 	update();
 
-}, 30000);
+}, 5000);
 
 function update () {
 
@@ -42,10 +42,10 @@ function processBambooStatus(bambooStatus) {
 	console.log(statusMessage);
 
 	//	io.sockets.emit('status', {value: statusMessage});	
-	projectStatus.setBambooStatus(bambooStatus);
-	if (bambooStatus === 'failed' || serverStatus === 'down') {
-		//projectStatus.ringBell();
-	}
+	display.setBambooStatus(bambooStatus);
+	// if (bambooStatus === 'failed' || serverStatus === 'down') {
+	// 	//projectStatus.ringBell();
+	// }
 
 	io.sockets.emit('lightBamboo', {value: bambooStatus});	
 }
@@ -55,7 +55,7 @@ function processServerStatus(serverStatus) {
 	var statusMessage = 'Status server: ' + serverStatus;
 	console.log(statusMessage);
 
-	projectStatus.setHealthStatus(serverStatus);
+	display.setHealthStatus(serverStatus);
 
 	io.sockets.emit('lightBackend', {value: serverStatus});	
 }
@@ -78,7 +78,6 @@ io.sockets.on('connection', function (socket) {
 		process.exit();
 	});
 	
-	socket.emit('status', {value: 'listening'});
 });
 
 console.log("running");

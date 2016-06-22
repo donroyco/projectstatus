@@ -31,7 +31,8 @@ button {
 #bambooStatusIndicator.building {
 	background: #3572b0;
 }
-#bambooStatusIndicator.error {
+#bambooStatusIndicator.error,
+#backendStatusIndicator.error {
 	background: #FF00FF;
 }
 #backendStatusIndicator.shaky {
