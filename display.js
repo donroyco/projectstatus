@@ -57,11 +57,13 @@ function allOff() {
 
 function allDisco() {
 	let disco = blinkRandomColor()
-				.then(() => hold(250))
+				.then(() => hold(500))
 				.then(() => blinkRandomColor())
-				.then(() => hold(250))
+				.then(() => hold(500))
 				.then(() => blinkRandomColor())
-				.then(() => hold(250))
+				.then(() => hold(500))
+				.then(() => blinkRandomColor())
+				.then(() => hold(500))
 				.then(() => blinkRandomColor());
 
 }
