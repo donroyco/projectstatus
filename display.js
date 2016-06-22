@@ -1,6 +1,8 @@
 'use strict';
 
 let Lamps = require('./statusLamp');
+var q = require('q');
+
 
 var lampBamboo = new Lamps(1);
 var lampServer = new Lamps(4);
@@ -54,6 +56,26 @@ function allOff() {
 }
 
 function allDisco() {
+	let disco = blinkRandomColor()
+				.then(() => hold(250))
+				.then(() => blinkRandomColor())
+				.then(() => hold(250))
+				.then(() => blinkRandomColor())
+				.then(() => hold(250))
+				.then(() => blinkRandomColor());
 
+}
+
+function hold(ms) {
+  return new Promise((resolve) => setTimeout(() => resolve(), ms));
+}
+
+function blinkRandomColor() {
+	var defer = q.defer();
+	var possibleColors = ['red','green','blue','yellow','purple','sea'];
+	lampBamboo.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
+	lampServer.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
+	console.log('disco');
+	return defer.promise;
 }
 

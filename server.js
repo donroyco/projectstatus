@@ -13,6 +13,7 @@ app.use(express.static('public'));
 var display = require('./display');
 
 display.allOff();
+var lastBambooStatus = 'unknown';
 
 // process.exit(); 
 
@@ -42,10 +43,13 @@ function processBambooStatus(bambooStatus) {
 	console.log(statusMessage);
 
 	//	io.sockets.emit('status', {value: statusMessage});	
+	if (lastBambooStatus !== bambooStatus && bambooStatus.toLowerCase() === 'succesful') {
+		//display.ringBell();
+		console.log('Go all disco');
+		display.allDisco();
+	}
+	lastBambooStatus = bambooStatus;
 	display.setBambooStatus(bambooStatus);
-	// if (bambooStatus === 'failed' || serverStatus === 'down') {
-	// 	//projectStatus.ringBell();
-	// }
 
 	io.sockets.emit('lightBamboo', {value: bambooStatus});	
 }
