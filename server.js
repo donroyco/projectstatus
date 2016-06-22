@@ -14,6 +14,7 @@ var display = require('./display');
 
 display.allOff();
 var lastBambooStatus = 'unknown';
+var lastServerStatus = 'unknown';
 
 // process.exit(); 
 
@@ -47,6 +48,10 @@ function processBambooStatus(bambooStatus) {
 		//display.ringBell();
 		console.log('Go all disco');
 		display.allDisco();
+		display.setBambooStatus(bambooStatus);
+
+		display.setServerStatus(lastServerStatus);
+
 	}
 	lastBambooStatus = bambooStatus;
 	display.setBambooStatus(bambooStatus);
@@ -59,6 +64,7 @@ function processServerStatus(serverStatus) {
 	var statusMessage = 'Status server: ' + serverStatus;
 	console.log(statusMessage);
 
+	lastServerStatus = bambooStatus;
 	display.setHealthStatus(serverStatus);
 
 	io.sockets.emit('lightBackend', {value: serverStatus});	
