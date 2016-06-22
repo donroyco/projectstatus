@@ -19,7 +19,7 @@ projectStatus.allOff();
 // that was quick
 
 var bambooStatusService = require('./bamboostatus');
-//var serverStatusService = require('./serverstatus');
+var serverStatusService = require('./serverstatus');
 
 //var bambooStatus = 'unknown';
 var serverStatus = 'unknown';
@@ -35,28 +35,33 @@ function update () {
 	bambooStatusService.getBambooStatus(projectName)
 	.then(processBambooStatus); 
 
-	//serverStatusService.getBambooStatus(projectName)
-	//.then(processBambooStatus); 
+	serverStatusService.getServerStatus()
+	.then(processServerStatus); 
 };
 
 function processBambooStatus(bambooStatus) {
 
-	var statusMessage = 'bamboo: ' + 
-	    				bambooStatus + 
-                		' health: ' + 
-                		serverStatus;
+	var statusMessage = 'Status bamboo: ' + bambooStatus;
 	console.log(statusMessage);
+
 	//	io.sockets.emit('status', {value: statusMessage});	
 	projectStatus.setBambooStatus(bambooStatus);
 	if (bambooStatus === 'failed' || serverStatus === 'down') {
 		//projectStatus.ringBell();
 	}
-	projectStatus.setHealthStatus(serverStatus);
 
 	io.sockets.emit('lightBamboo', {value: bambooStatus});	
-	io.sockets.emit('lightBackend', {value: serverStatus});	
 }
 
+function processServerStatus(serverStatus) {
+
+	var statusMessage = 'Status server: ' + serverStatus;
+	console.log(statusMessage);
+
+	projectStatus.setHealthStatus(serverStatus);
+
+	io.sockets.emit('lightBackend', {value: serverStatus});	
+}
 
 io.sockets.on('connection', function (socket) {
 	socket.on('bamboo', function (data) {
