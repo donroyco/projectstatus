@@ -9,7 +9,8 @@ module.exports = {
     setBambooStatus: setBambooStatus,
     setHealthStatus: setHealthStatus,
     ringBell: ringBell,
-    allOff: allOff
+    allOff: allOff, 
+    allDisco: allDisco
 };
 
 function setBambooStatus(status) {
@@ -50,5 +51,9 @@ function ringBell() {
 function allOff() {
 	lampBamboo.set('off');
 	lampServer.set('off')
+}
+
+function allDisco() {
+
 }
 

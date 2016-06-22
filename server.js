@@ -18,17 +18,14 @@ projectStatus.allOff();
 
 // that was quick
 
-var bambooStatusService = require('./bamboostatus');
-var serverStatusService = require('./serverstatus');
-
-//var bambooStatus = 'unknown';
-var serverStatus = 'unknown';
+var bambooStatusService = require('./bamboostatusservice');
+var serverStatusService = require('./serverstatusservice');
 
 var ticker = setInterval(function() {
 
 	update();
 
-}, 15000);
+}, 30000);
 
 function update () {
 
