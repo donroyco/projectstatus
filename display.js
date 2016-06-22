@@ -57,20 +57,19 @@ function allOff() {
 
 function allDisco(toStatus) {
 	let disco = blinkRandomColor()
-				.then(() => hold(800))
+				.then(() => hold())
 				.then(() => blinkRandomColor())
-				.then(() => hold(800))
+				.then(() => hold())
 				.then(() => blinkRandomColor())
-				.then(() => hold(800))
+				.then(() => hold())
 				.then(() => blinkRandomColor())
-				.then(() => hold(800))
+				.then(() => hold())
 				.then(() => blinkRandomColor())
 				.then(() => lampBamboo.set(toStatus));
-
 }
 
-function hold(ms) {
-  return new Promise((resolve) => setTimeout(() => resolve(), ms));
+function hold() {
+  return new Promise((resolve) => setTimeout(() => resolve(), 1200));
 }
 
 function blinkRandomColor() {
