@@ -56,7 +56,7 @@ StatusLamp.prototype = {
 
         function setColor(lampColor, state) {
             // Do the exec
-            var command = `../crelay/src/crelay ${lampColor} ${state}`;
+            var command = `crelay ${lampColor} ${state}`;
 
             var exec = require('child_process').execSync;
             exec(command, function(error, stdout, stderr) {
