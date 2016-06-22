@@ -47,11 +47,7 @@ function processBambooStatus(bambooStatus) {
 	if (lastBambooStatus !== bambooStatus && bambooStatus.toLowerCase() === 'successful') {
 		//display.ringBell();
 		console.log('Go all disco');
-		display.allDisco();
-		display.setBambooStatus(bambooStatus);
-
-		display.setServerStatus(lastServerStatus);
-
+		display.allDisco(bambooStatus);
 	}
 	lastBambooStatus = bambooStatus;
 	display.setBambooStatus(bambooStatus);

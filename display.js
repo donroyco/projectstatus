@@ -55,7 +55,7 @@ function allOff() {
 	lampServer.set('off')
 }
 
-function allDisco() {
+function allDisco(toStatus) {
 	let disco = blinkRandomColor()
 				.then(() => hold(800))
 				.then(() => blinkRandomColor())
@@ -64,7 +64,8 @@ function allDisco() {
 				.then(() => hold(800))
 				.then(() => blinkRandomColor())
 				.then(() => hold(800))
-				.then(() => blinkRandomColor());
+				.then(() => blinkRandomColor())
+				.then(() => lampBamboo.set(toStatus));
 
 }
 
@@ -76,7 +77,7 @@ function blinkRandomColor() {
 	var defer = q.defer();
 	var possibleColors = ['red','green','blue','yellow','purple','sea'];
 	lampBamboo.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
-	lampServer.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
+	// lampServer.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
 	console.log('disco');
 	return defer.promise;
 }
