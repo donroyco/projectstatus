@@ -59,7 +59,7 @@ function processServerStatus(serverStatus) {
 	var statusMessage = 'Status server: ' + serverStatus;
 	console.log(statusMessage);
 
-	lastServerStatus = bambooStatus;
+	lastServerStatus = serverStatus;
 	display.setHealthStatus(serverStatus);
 
 	io.sockets.emit('lightBackend', {value: serverStatus});	
