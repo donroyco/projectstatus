@@ -16,10 +16,6 @@ display.allOff();
 var lastBambooStatus = 'unknown';
 var lastServerStatus = 'unknown';
 
-// process.exit(); 
-
-// that was quick
-
 var bambooStatusService = require('./bamboostatusservice');
 var serverStatusService = require('./serverstatusservice');
 
