@@ -57,35 +57,19 @@ function allOff() {
 
 function allDisco(toStatus) {
 	let disco = blinkRandomColor()
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
-				.then(() => hold())
-				.then(() => blinkRandomColor())
+				.then(blinkRandomColor)
+				.then(blinkRandomColor)
+				.then(blinkRandomColor)
+				.then(blinkRandomColor)
+				.then(blinkRandomColor)
 				.then(() => lampBamboo.set(toStatus));
 }
 
-function hold() {
-  return new Promise((resolve) => setTimeout(() => resolve(), 1200));
-}
-
 function blinkRandomColor() {
-	var defer = q.defer();
+
 	var possibleColors = ['red','green','blue','yellow','purple','sea'];
 	lampBamboo.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
-	return defer.promise;
+	console.log('random color ');
+    return new Promise((resolve) => setTimeout(resolve, 400));
 }
 
