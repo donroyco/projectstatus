@@ -10,15 +10,16 @@ function getServerStatus() {
     requestP({uri: 'https://www.ute1.klm.com/ams/beta/myweb/api/customer/current', resolveWithFullResponse: true })
     .then(function (response) {
         if (response.statusCode && response.statusCode < 400) {
-            defer.resolve('up');
+            defer.resolve({'value': 'up', 'info': 'up'});
         } else {
-            defer.resolve('down');
+            defer.resolve({'value': 'down', 'info': 'down'});
         }
     })
     .catch(function (err) {
         // parsing failed 
         // console.log('error index: ', err);
         defer.resolve('error');
+        defer.resolve({'value':'error', 'info': err});
     });
 
     return defer.promise;

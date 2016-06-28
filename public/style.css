@@ -42,3 +42,9 @@ button {
 #backendStatusIndicator.down {
 	background: #d04437;
 }
+
+#bambooStatusIndicator.disco, 
+#backendStatusIndicator.disco {
+	background: url(statusdisco.gif);
+	background-size: 99%;
+}

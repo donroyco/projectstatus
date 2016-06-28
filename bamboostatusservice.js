@@ -12,7 +12,7 @@ function getBambooStatus(projectName) {
     requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
     .then(function (bamboo) {
     	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
-            defer.resolve('building');
+            defer.resolve({'value': 'building', 'info': 'building'});
     	} else {
     		// see list of last builds
     		requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/rest/api/latest/result/${projectName}.json`))
@@ -21,11 +21,12 @@ function getBambooStatus(projectName) {
     			if (lastRuns.results.result[0].link.href) {
     				requestP(uriWithOptionForJason(lastRuns.results.result[0].link.href))
     				.then(function(result) {
-    					console.log(`Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `);
-    					defer.resolve(result.buildState.toLowerCase());
+    					//console.log(`Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `);
+    					defer.resolve({'value': result.buildState.toLowerCase(),
+                            'info': `Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `});
     				})
     			} else {
-                    defer.resolve('error');
+                    defer.resolve({'value': 'error', 'info': 'unknown error'});
                 }
     		})
     	}
@@ -33,7 +34,7 @@ function getBambooStatus(projectName) {
     .catch(function (err) {
         // parsing failed 
         console.log('error index: ', err);
-        defer.resolve('error');
+        defer.resolve({'value': 'error', 'info': err});
     });
 
     return defer.promise;

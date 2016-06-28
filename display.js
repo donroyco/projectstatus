@@ -69,7 +69,7 @@ function blinkRandomColor() {
 
 	var possibleColors = ['red','green','blue','yellow','purple','sea'];
 	lampBamboo.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
-	console.log('random color ');
+	//console.log('random color ');
     return new Promise((resolve) => setTimeout(resolve, 400));
 }
 
