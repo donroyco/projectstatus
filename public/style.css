@@ -26,21 +26,25 @@ button {
 }
 #bambooStatusIndicator.successful,
 #backendStatusIndicator.up {
-	background: #14892c;
+	background: url(statusGreen.png);
+	background-size: 99%;
 }
 #bambooStatusIndicator.building {
-	background: #3572b0;
+	background: url(statusBlue.png);
+	background-size: 99%;
 }
 #bambooStatusIndicator.error,
 #backendStatusIndicator.error {
-	background: #FF00FF;
+	background: url(statusPurple.png);
+	background-size: 99%;
 }
 #backendStatusIndicator.shaky {
 	background: #ffff00;
 }
 #bambooStatusIndicator.failed, 
 #backendStatusIndicator.down {
-	background: #d04437;
+	background: url(statusRed.png);
+	background-size: 99%;
 }
 
 #bambooStatusIndicator.disco, 

@@ -55,7 +55,9 @@ function allOff() {
 	lampServer.set('off')
 }
 
+var howlong = 20;
 function allDisco(toStatus) {
+	howlong = 20;
 	let disco = blinkRandomColor()
 				.then(blinkRandomColor)
 				.then(blinkRandomColor)
@@ -65,11 +67,12 @@ function allDisco(toStatus) {
 				.then(() => lampBamboo.set(toStatus));
 }
 
-function blinkRandomColor() {
+function blinkRandomColor(howlong) {
 
 	var possibleColors = ['red','green','blue','yellow','purple','sea'];
 	lampBamboo.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
+	howlong = howlong * 3;
 	//console.log('random color ');
-    return new Promise((resolve) => setTimeout(resolve, 400));
+    return new Promise((resolve) => setTimeout(resolve, howlong));
 }
 
