@@ -1,7 +1,7 @@
 // Config
 
 var projectName = 'MYWP-MYWPD';
-var socketPort = 8082;
+var socketPort = 8081;
 
 var tickTimeSeconds = 30;
 var startAt = '07:30'; // Preceding zero
