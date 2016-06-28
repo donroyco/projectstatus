@@ -1,6 +1,13 @@
-var projectName = 'MYWP-MYWPD';
-var socketPort = 8081;
+// Config
 
+var projectName = 'MYWP-MYWPD';
+var socketPort = 8082;
+
+var tickTimeSeconds = 30;
+var startAt = '07:30'; // Preceding zero
+var endAt = '16:30';
+
+// Dependencies
 
 var express = require('express');
 app = express();
@@ -13,26 +20,52 @@ app.use(express.static('public'));
 var display = require('./display');
 
 display.allOff();
+var isAllOff = false;
+
 var lastBambooStatus = 'unknown';
 var lastServerStatus = 'unknown';
 
 var bambooStatusService = require('./bamboostatusservice');
 var serverStatusService = require('./serverstatusservice');
 
+
 var ticker = setInterval(function() {
 
 	update();
 
-}, 30000);
+}, tickTimeSeconds * 1000);
 
 function update () {
 
-	bambooStatusService.getBambooStatus(projectName)
-	.then(processBambooStatus); 
+	if (inOfficeHours()) {
+		if (isAllOff) {
+			isAllOff = false;
+			console.log('Starting within office hours');
+		}
 
-	serverStatusService.getServerStatus()
-	.then(processServerStatus); 
+		bambooStatusService.getBambooStatus(projectName)
+		.then(processBambooStatus); 
+
+		serverStatusService.getServerStatus()
+		.then(processServerStatus); 
+
+	} else {
+
+		if (!isAllOff) {
+			display.allOff();
+			isAllOff = true;
+			console.log('After office hours');
+		}
+	}
 };
+
+function inOfficeHours() {
+	var time = new Date();
+    var currTime = ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
+	//console.log(currTime, startAt, endAt);
+
+	return currTime >= startAt && currTime <= endAt;
+}
 
 function processBambooStatus(bambooStatus) {
 

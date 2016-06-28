@@ -25,6 +25,9 @@ StatusLamp.prototype = {
 	               case 'green': 
 	                    setColor(this.lampGreen, 'on');
 	               break;
+	               case 'succesful': 
+	                    setColor(this.lampGreen, 'on');
+	               break;
 	               case 'blue': 
 	                    setColor(this.lampBlue, 'on');
 	               break;
@@ -50,7 +53,7 @@ StatusLamp.prototype = {
 	                    setColor(this.lampGreen, 'off');
 	                    setColor(this.lampBlue, 'off');
 	               break;
-	               default:  console.log('unknown color: ' , color);
+	               //default;
 	        }
 	}
 
