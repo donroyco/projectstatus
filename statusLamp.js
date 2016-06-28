@@ -25,7 +25,7 @@ StatusLamp.prototype = {
 	               case 'green': 
 	                    setColor(this.lampGreen, 'on');
 	               break;
-	               case 'succesful': 
+	               case 'successful': 
 	                    setColor(this.lampGreen, 'on');
 	               break;
 	               case 'blue': 
