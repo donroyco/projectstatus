@@ -30,12 +30,12 @@ button {
 	background-size: 99%;
 }
 #bambooStatusIndicator.building {
-	background: url(statusBlue.png);
+	background: url(StatusBlue.png);
 	background-size: 99%;
 }
 #bambooStatusIndicator.error,
 #backendStatusIndicator.error {
-	background: url(statusPurple.png);
+	background: url(StatusPurple.png);
 	background-size: 99%;
 }
 #backendStatusIndicator.shaky {
@@ -43,7 +43,7 @@ button {
 }
 #bambooStatusIndicator.failed, 
 #backendStatusIndicator.down {
-	background: url(statusRed.png);
+	background: url(StatusRed.png);
 	background-size: 99%;
 }
 
