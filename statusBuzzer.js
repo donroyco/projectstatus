@@ -7,16 +7,16 @@ var StatusBuzzer = function (port) {
 // properties and methods
 StatusBuzzer.prototype = {
     buzzOn: function () {
-		console.log('buzzer on');
+		console.log('buzzer on', this.buzzerPort);
 		setBuzz(this.buzzerPort, 'on');    	
     },
     buzzOff: function () {
-		console.log('buzzer off');
+		console.log('buzzer off', this.buzzerPort);
 		setBuzz(this.buzzerPort, 'off');    	
     },
     buzz: function(howLong) {
         this.buzzOn();
-        setTimeout(this.buzzOff, howLong);
+        setTimeout(this.buzzOff.bind(this), howLong);
     }
 
 };
