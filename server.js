@@ -24,6 +24,7 @@ display.allOff();
 display.buzz();
 
 var isAllOff = false;
+var overruleOfficeHours = false;
 
 var lastBambooStatus = 'unknown';
 var lastServerStatus = 'unknown';
@@ -31,14 +32,14 @@ var lastServerStatus = 'unknown';
 var bambooStatusService = require('./bamboostatusservice');
 var serverStatusService = require('./serverstatusservice');
 
-
+// Process ticks...
 var ticker = setInterval(function() {
 
 	update();
 
 }, tickTimeSeconds * 1000);
 
-function update () {
+function update() {
 
 	io.sockets.emit('generalInfo', 'Checking Project Status');	
 	
@@ -123,13 +124,19 @@ io.sockets.on('connection', function (socket) {
 		display.allDisco(lastBambooStatus);
 	}); 
 
+<<<<<<< HEAD
 	socket.on('aBuzz', function (data) {
 		display.buzz();
+=======
+	socket.on('overruleOfficeHOurs', function (data) {
+		overruleOfficeHours = data;
+		console.log('overruling office hours');
+>>>>>>> 4c195f74afef785e884f8d203661a0e33df6eb6d
 	}); 
 
 	socket.on('quitAll', function (data) {
 		console.log("quitting");
-		projectStatus.allOff();
+		display.allOff();
 		
 		io.sockets.emit('allOff', '');	
 		server.close();	
