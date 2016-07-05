@@ -124,14 +124,8 @@ io.sockets.on('connection', function (socket) {
 		display.allDisco(lastBambooStatus);
 	}); 
 
-<<<<<<< HEAD
 	socket.on('aBuzz', function (data) {
 		display.buzz();
-=======
-	socket.on('overruleOfficeHOurs', function (data) {
-		overruleOfficeHours = data;
-		console.log('overruling office hours');
->>>>>>> 4c195f74afef785e884f8d203661a0e33df6eb6d
 	}); 
 
 	socket.on('quitAll', function (data) {
