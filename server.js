@@ -20,6 +20,9 @@ app.use(express.static('public'));
 var display = require('./display');
 
 display.allOff();
+
+display.buzz();
+
 var isAllOff = false;
 
 var lastBambooStatus = 'unknown';
@@ -37,6 +40,8 @@ var ticker = setInterval(function() {
 
 function update () {
 
+	io.sockets.emit('generalInfo', 'Checking Project Status');	
+	
 	if (inOfficeHours()) {
 		if (isAllOff) {
 			isAllOff = false;
@@ -55,16 +60,21 @@ function update () {
 			display.allOff();
 			isAllOff = true;
 			console.log('After office hours');
+			io.sockets.emit('generalInfo', 'Outside Office Hours');	
 		}
 	}
+
 };
 
 function inOfficeHours() {
 	var time = new Date();
     var currTime = ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
 	//console.log(currTime, startAt, endAt);
+	var isTimeOK = currTime >= startAt && currTime <= endAt;
 
-	return currTime >= startAt && currTime <= endAt;
+	var isWeekend = time.getDay() === 7 || time.getDay() === 0;
+
+	return isTimeOK && !isWeekend;
 }
 
 function processBambooStatus(bambooStatus) {
@@ -74,8 +84,11 @@ function processBambooStatus(bambooStatus) {
 
 	//	io.sockets.emit('status', {value: statusMessage});	
 	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'successful') {
-		//display.ringBell();
+		//display.buzz();
 		display.allDisco(bambooStatus.value);
+	}
+	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'failed') {
+		display.buzz();
 	}
 	lastBambooStatus = bambooStatus.value;
 	display.setBambooStatus(bambooStatus.value);
@@ -108,6 +121,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('allDisco', function (data) {
 		display.allDisco(lastBambooStatus);
+	}); 
+
+	socket.on('aBuzz', function (data) {
+		display.buzz();
 	}); 
 
 	socket.on('quitAll', function (data) {

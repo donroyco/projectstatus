@@ -14,47 +14,47 @@ StatusLamp.prototype = {
         let lColor = color.toLowerCase();
         if (color !== this.currentColor) {
 		this.currentColor = color;
-	        setColor(this.lampRed, 'off');
-	        setColor(this.lampGreen, 'off');
-	        setColor(this.lampBlue, 'off');
-	
-	        switch (lColor) {
-	               case 'red': 
-	                    setColor(this.lampRed, 'on');
-	               break;
-	               case 'green': 
-	                    setColor(this.lampGreen, 'on');
-	               break;
-	               case 'successful': 
-	                    setColor(this.lampGreen, 'on');
-	               break;
-	               case 'blue': 
-	                    setColor(this.lampBlue, 'on');
-	               break;
-	               case 'yellow': 
-	                    setColor(this.lampRed, 'on');
-	                    setColor(this.lampGreen, 'on');
-	               break;
-	               case 'purple': 
-	                    setColor(this.lampRed, 'on');
-	                    setColor(this.lampBlue, 'on');
-	               break;
-	               case 'sea': 
-	                    setColor(this.lampGreen, 'on');
-	                    setColor(this.lampBlue, 'on');
-	               break;
-	               case 'all': 
-	                    setColor(this.lampRed, 'on');
-	                    setColor(this.lampGreen, 'on');
-	                    setColor(this.lampBlue, 'on');
-	               break;
-	               case 'off': 
-	                    setColor(this.lampRed, 'off');
-	                    setColor(this.lampGreen, 'off');
-	                    setColor(this.lampBlue, 'off');
-	               break;
-	               //default;
-	        }
+        setColor(this.lampRed, 'off');
+        setColor(this.lampGreen, 'off');
+        setColor(this.lampBlue, 'off');
+
+        switch (lColor) {
+               case 'red': 
+                    setColor(this.lampRed, 'on');
+               break;
+               case 'green': 
+                    setColor(this.lampGreen, 'on');
+               break;
+               case 'successful': 
+                    setColor(this.lampGreen, 'on');
+               break;
+               case 'blue': 
+                    setColor(this.lampBlue, 'on');
+               break;
+               case 'yellow': 
+                    setColor(this.lampRed, 'on');
+                    setColor(this.lampGreen, 'on');
+               break;
+               case 'purple': 
+                    setColor(this.lampRed, 'on');
+                    setColor(this.lampBlue, 'on');
+               break;
+               case 'sea': 
+                    setColor(this.lampGreen, 'on');
+                    setColor(this.lampBlue, 'on');
+               break;
+               case 'all': 
+                    setColor(this.lampRed, 'on');
+                    setColor(this.lampGreen, 'on');
+                    setColor(this.lampBlue, 'on');
+               break;
+               case 'off': 
+                    setColor(this.lampRed, 'off');
+                    setColor(this.lampGreen, 'off');
+                    setColor(this.lampBlue, 'off');
+               break;
+               //default;
+        }
 	}
 
         function setColor(lampColor, state) {

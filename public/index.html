@@ -15,7 +15,6 @@
 		<div class="span12">
 			<H2>BACKEND <span id="backendStatusIndicator"></span></H2>
 			<button onclick="setBackendStatus('up');">Up & Running</button>
-			<button onclick="setBackendStatus('shaky');">Shaky</button>
 			<button onclick="setBackendStatus('down');">Down</button>
 			<div id="backendInfo">...</div>
 		</div>
@@ -35,6 +34,8 @@
 <hr>
 <button onclick="quitAll();">Quit process</button>
 <button onclick="allDisco();">Dont press</button>
+<button onclick="aBuzz();">Attention</button>
+<div id="generalInfo">...</div>
 
 
 
@@ -51,12 +52,16 @@
 		document.getElementById("backendInfo").innerHTML = data.info;
 	});
 	
+	socket.on('generalInfo', function (data) {
+		document.getElementById("generalInfo").innerHTML = data;
+	});
+	
 	function setBambooStatus(statusBamboo) {
-		socket.emit('bamboo', { value: statusBamboo, info: 'set manually in frontend' });
+		socket.emit('bamboo', { value: statusBamboo, info: 'set manually in frontend'});
 	}
 
 	function setBackendStatus(statusBackend) {
-		socket.emit('backend', { value: statusBackend });
+		socket.emit('backend', { value: statusBackend, info: 'set manually in frontend'  });
 	}
 
 	function quitAll() {
@@ -66,6 +71,10 @@
 	function allDisco() {
 		socket.emit('allDisco', {});
 		document.getElementById("bambooStatusIndicator").className = 'disco';
+	}
+
+	function aBuzz() {
+		socket.emit('aBuzz', {});
 	}
 
 	socket.on('allOff', function (data) {

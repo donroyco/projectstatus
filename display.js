@@ -1,16 +1,18 @@
 'use strict';
 
 let Lamps = require('./statusLamp');
+let Buzzer = require('./statusBuzzer');
 var q = require('q');
 
 
 var lampBamboo = new Lamps(1);
 var lampServer = new Lamps(4);
+var buzzer = new Buzzer(7);
 
 module.exports = {
     setBambooStatus: setBambooStatus,
     setHealthStatus: setHealthStatus,
-    ringBell: ringBell,
+    buzz: buzz,
     allOff: allOff, 
     allDisco: allDisco
 };
@@ -45,9 +47,8 @@ function setHealthStatus(status) {
 	}
 }
 
-function ringBell() {
-	// setTimeout(function() {
-	// } , 800);
+function buzz() {
+	buzzer.buzz(500);
 }
 
 function allOff() {
