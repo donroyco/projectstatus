@@ -26,7 +26,7 @@ button {
 }
 #bambooStatusIndicator.successful,
 #backendStatusIndicator.up {
-	background: url(statusGreen.png);
+	background: url(StatusGreen.png);
 	background-size: 99%;
 }
 #bambooStatusIndicator.building {
