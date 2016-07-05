@@ -68,6 +68,11 @@ function update() {
 };
 
 function inOfficeHours() {
+	if (overruleOfficeHours) {
+		io.sockets.emit('generalInfo', 'Office Hours overruled');
+		return true;
+	}
+ 
 	var time = new Date();
     var currTime = ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
 	//console.log(currTime, startAt, endAt);
@@ -126,6 +131,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('aBuzz', function (data) {
 		display.buzz();
+	}); 
+
+	socket.on('officeHours', function (data) {
+		overruleOfficeHours = data;
 	}); 
 
 	socket.on('quitAll', function (data) {

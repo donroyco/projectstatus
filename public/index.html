@@ -32,8 +32,8 @@
 
 </div>
 <hr>
-<button onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
-<button onclick="overruleOfficeHours(false);">reset to OfficeHours</button>
+<button id="btnOverruleOfficeHours" onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
+<button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
 <button onclick="quitAll();">Quit process</button>
 <button onclick="allDisco();">Dont press</button>
 <button onclick="aBuzz();">Attention</button>
@@ -71,7 +71,15 @@
 	}
 
 	function overruleOfficeHours(data) {
-		socket.emit('overruleOfficeHours', { data: data });
+		if (data === true) {
+			document.getElementById("btnOverruleOfficeHours").style.display="none";
+			document.getElementById("btnResetOfficeHours").style.display="initial";
+		} else {
+			document.getElementById("btnOverruleOfficeHours").style.display="initial";
+			document.getElementById("btnResetOfficeHours").style.display="none";
+		}	
+		 
+		socket.emit('officeHours', { data: data });
 	}
 
 	function allDisco() {
