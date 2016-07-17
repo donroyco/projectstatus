@@ -7,7 +7,7 @@ function getHealthStatus() {
 
     var defer = q.defer();
 
-    requestP({uri: 'https://www.ute1.klm.com/ams/beta/myweb/api/customer/current', resolveWithFullResponse: true })
+    requestP({uri: 'https://www.ute1.klm.com/ams/beta/myweb/api/customer/current', resolveWithFullResponse: true, timeout: 7000 })
     .then(function (response) {
         if (response.statusCode && response.statusCode < 400) {
             defer.resolve({'value': 'up', 'info': 'up'});
