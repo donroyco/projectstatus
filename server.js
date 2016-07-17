@@ -17,6 +17,16 @@ var io = require('socket.io').listen(server);
 server.listen(socketPort);
 app.use(express.static('public'));		
 
+// Configuration
+var nconf = require('nconf');
+nconf.argv()
+   .env()
+   .file({ file: 'config-mywp.json' })
+   .load();
+
+ console.log(nconf.get('projectname'));
+
+
 var display = require('./display');
 
 display.allOff();
@@ -68,7 +78,7 @@ function update() {
 };
 
 function inOfficeHours() {
-	if (overruleOfficeHours) {
+	if (overruleOfficeHours === true) {
 		io.sockets.emit('generalInfo', 'Office Hours overruled');
 		return true;
 	}
@@ -96,7 +106,6 @@ function processBambooStatus(bambooStatus) {
 
 function processHealthStatus(healthStatus) {
 
-	console.log('biddie ', healthStatus);
 	lastHealthStatus = healthStatus.value;
 	display.setHealthStatus(healthStatus.value);
 
@@ -110,8 +119,14 @@ io.sockets.on('connection', function (socket) {
 	}); 
 
 	socket.on('evtHealth', function (data) {
-		console.log('health enforced');
 		processHealthStatus(data);
+	}); 
+
+	socket.on('updateNow', function (data) {
+		var wasOverruled = overruleOfficeHours;
+		overruleOfficeHours = true;
+		update();
+		overruleOfficeHours = wasOverruled;
 	}); 
 
 	socket.on('allDisco', function (data) {

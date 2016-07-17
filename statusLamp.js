@@ -10,7 +10,7 @@ var StatusLamp = function (startPort) {
 // properties and methods
 StatusLamp.prototype = {
     set: function(color) {
-        // Somehow use a C process to set the color
+        // use a C process to set the color
         let lColor = color.toLowerCase();
         if (color !== this.currentColor) {
     		this.currentColor = color;

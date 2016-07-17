@@ -9,7 +9,7 @@ var lampBamboo = new Lamps(1);
 var lampHealth = new Lamps(4);
 var buzzer = new Buzzer(7);
 
-var defaultTick = 500;
+var defaultTick = 200;
 var shortTick = 250;
 
 module.exports = {
@@ -62,8 +62,13 @@ function allOff() {
 function allDisco() {
 	var lastHealthColor = lampHealth.currentColor;
 	var lastBambooColor = lampBamboo.currentColor;
+	console.log('disco requested');
 
 	let disco = blinkBambooRandom()
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
 				.then(blinkServerRandom)
 				.then(blinkBambooRandom)
 				.then(blinkServerRandom)
@@ -82,18 +87,12 @@ function allDisco() {
 }
 
 function blinkBambooRandom() {
-
-//	lampHealth.set('off');
 	lampBamboo.set(randomColor(lampBamboo.currentColor));
-	console.log('bamboo set to ', lampBamboo.currentColor);
     return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 
 function blinkServerRandom() {
-
-//	lampBamboo.set('off');
 	lampHealth.set(randomColor(lampHealth.currentColor));
-	console.log('server set to ', lampHealth.currentColor);
     return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 

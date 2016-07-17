@@ -32,6 +32,7 @@
 
 </div>
 <hr>
+<button onclick="updateNow();">Run now</button>
 <button id="btnOverruleOfficeHours" onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
 <button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
 <button onclick="quitAll();">Quit process</button>
@@ -58,6 +59,10 @@
 		document.getElementById("generalInfo").innerHTML = data;
 	});
 	
+	function updateNow() {
+		socket.emit('updateNow', {});
+	}
+
 	function setBambooStatus(statusBamboo) {
 		socket.emit('evtBamboo', { value: statusBamboo, info: 'set manually in frontend'});
 	}
@@ -85,6 +90,7 @@
 	function allDisco() {
 		socket.emit('allDisco', {});
 		document.getElementById("bambooStatusIndicator").className = 'disco';
+		document.getElementById("healthStatusIndicator").className = 'disco';
 	}
 
 	function aBuzz() {
