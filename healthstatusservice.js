@@ -16,7 +16,7 @@ function getHealthStatus() {
         }
     })
     .catch(function (err) {
-        defer.resolve({'value':'error', 'info': err});
+        defer.resolve({'value':'error', 'info': err.message});
     });
 
     return defer.promise;

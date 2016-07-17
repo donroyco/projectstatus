@@ -34,7 +34,7 @@ function getBambooStatus(projectName) {
     .catch(function (err) {
         // parsing failed 
         console.log('error index: ', err);
-        defer.resolve({'value': 'error', 'info': err});
+        defer.resolve({'value': 'error', 'info': err.message});
     });
 
     return defer.promise;

@@ -6,10 +6,11 @@ var q = require('q');
 
 
 var lampBamboo = new Lamps(1);
-var lampServer = new Lamps(4);
+var lampHealth = new Lamps(4);
 var buzzer = new Buzzer(7);
 
 var defaultTick = 500;
+var shortTick = 250;
 
 module.exports = {
     setBambooStatus: setBambooStatus,
@@ -36,16 +37,16 @@ function setBambooStatus(status) {
 
 function setHealthStatus(status) {
 	if (status === 'up') {
-		lampServer.set('green');
+		lampHealth.set('green');
 	}
 	if (status === 'shaky') {
-		lampServer.set('yellow');
+		lampHealth.set('yellow');
 	}
 	if (status === 'down') {
-		lampServer.set('red');
+		lampHealth.set('red');
 	}
 	if (status === 'error') {
-		lampServer.set('purple');
+		lampHealth.set('purple');
 	}
 }
 
@@ -55,14 +56,12 @@ function buzz() {
 
 function allOff() {
 	lampBamboo.set('off');
-	lampServer.set('off')
+	lampHealth.set('off')
 }
 
 function allDisco() {
-	var lastServerColor = lampServer.currentColor;
+	var lastHealthColor = lampHealth.currentColor;
 	var lastBambooColor = lampBamboo.currentColor;
-
-	console.log('Going for allDisco');
 
 	let disco = blinkBambooRandom()
 				.then(blinkServerRandom)
@@ -77,23 +76,25 @@ function allDisco() {
 				.then(blinkBambooRandom)
 				.then(blinkServerRandom)
 				.then(() => {
-					lampBamboo.set(lastBambooColor)
-					lampServer.set(lastServerColor)
+					lampBamboo.set(lastBambooColor || 'off')
+					lampHealth.set(lastHealthColor || 'off')
 					});
 }
 
 function blinkBambooRandom() {
 
+//	lampHealth.set('off');
 	lampBamboo.set(randomColor(lampBamboo.currentColor));
 	console.log('bamboo set to ', lampBamboo.currentColor);
-    return new Promise((resolve) => setTimeout(resolve, defaultTick));
+    return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 
 function blinkServerRandom() {
 
-	lampServer.set(randomColor(lampServer.currentColor));
-	console.log('server set to ', lampServer.currentColor);
-    return new Promise((resolve) => setTimeout(resolve, defaultTick));
+//	lampBamboo.set('off');
+	lampHealth.set(randomColor(lampHealth.currentColor));
+	console.log('server set to ', lampHealth.currentColor);
+    return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 
 function randomColor(notBeingColor) {
@@ -103,7 +104,7 @@ function randomColor(notBeingColor) {
 	var discoColor = possibleColors[randomPos];
 	if (discoColor === notBeingColor) {
 		// Move one color up if same color picked twice in a row
-		discoColor = (randomPos === possibleColors.length) ? possibleColors[0] : possibleColors[randomPos + 1];
+		discoColor = (randomPos === (possibleColors.length -1)) ? possibleColors[0] : possibleColors[randomPos + 1];
 	}
 	return discoColor;
 }
