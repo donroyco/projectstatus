@@ -13,10 +13,10 @@
 
 	  <div class="row">
 		<div class="span12">
-			<H2>BACKEND <span id="backendStatusIndicator"></span></H2>
-			<button onclick="setBackendStatus('up');">Up & Running</button>
-			<button onclick="setBackendStatus('down');">Down</button>
-			<div id="backendInfo">...</div>
+			<H2>HEALTH <span id="healthStatusIndicator"></span></H2>
+			<button onclick="setHealthStatus('up');">Up & Running</button>
+			<button onclick="setHealthStatus('down');">Down</button>
+			<div id="healthInfo">...</div>
 		</div>
 	</div>
 
@@ -49,9 +49,9 @@
 		document.getElementById("bambooInfo").innerHTML = data.info;
 	});
 	
-	socket.on('lightBackend', function (data) {
-		document.getElementById("backendStatusIndicator").className = data.value;
-		document.getElementById("backendInfo").innerHTML = data.info;
+	socket.on('lightHealth', function (data) {
+		document.getElementById("healthStatusIndicator").className = data.value;
+		document.getElementById("healthInfo").innerHTML = data.info;
 	});
 	
 	socket.on('generalInfo', function (data) {
@@ -59,11 +59,11 @@
 	});
 	
 	function setBambooStatus(statusBamboo) {
-		socket.emit('bamboo', { value: statusBamboo, info: 'set manually in frontend'});
+		socket.emit('evtBamboo', { value: statusBamboo, info: 'set manually in frontend'});
 	}
 
-	function setBackendStatus(statusBackend) {
-		socket.emit('backend', { value: statusBackend, info: 'set manually in frontend'  });
+	function setHealthStatus(statusHealth) {
+		socket.emit('evtHealth', { value: statusHealth, info: 'set manually in frontend'  });
 	}
 
 	function quitAll() {
@@ -93,7 +93,7 @@
 
 	socket.on('allOff', function (data) {
 		document.getElementById("bambooStatusIndicator").className = '';
-		document.getElementById("backendStatusIndicator").className = '';
+		document.getElementById("healthStatusIndicator").className = '';
 	});
 
 </script>

@@ -9,6 +9,8 @@ var lampBamboo = new Lamps(1);
 var lampServer = new Lamps(4);
 var buzzer = new Buzzer(7);
 
+var defaultTick = 500;
+
 module.exports = {
     setBambooStatus: setBambooStatus,
     setHealthStatus: setHealthStatus,
@@ -48,7 +50,7 @@ function setHealthStatus(status) {
 }
 
 function buzz() {
-	buzzer.buzz(500);
+	buzzer.buzz(defaultTick);
 }
 
 function allOff() {
@@ -56,30 +58,52 @@ function allOff() {
 	lampServer.set('off')
 }
 
-var howlong = 25;
-var lastDiscoColor = 'unknown';
-function allDisco(toStatus) {
-	howlong = 25;
-	let disco = blinkRandomColor()
-				.then(blinkRandomColor)
-				.then(blinkRandomColor)
-				.then(blinkRandomColor)
-				.then(blinkRandomColor)
-				.then(blinkRandomColor)
-				.then(() => lampBamboo.set(toStatus));
+function allDisco() {
+	var lastServerColor = lampServer.currentColor;
+	var lastBambooColor = lampBamboo.currentColor;
+
+	console.log('Going for allDisco');
+
+	let disco = blinkBambooRandom()
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
+				.then(blinkServerRandom)
+				.then(blinkBambooRandom)
+				.then(blinkServerRandom)
+				.then(() => {
+					lampBamboo.set(lastBambooColor)
+					lampServer.set(lastServerColor)
+					});
 }
 
-function blinkRandomColor() {
+function blinkBambooRandom() {
+
+	lampBamboo.set(randomColor(lampBamboo.currentColor));
+	console.log('bamboo set to ', lampBamboo.currentColor);
+    return new Promise((resolve) => setTimeout(resolve, defaultTick));
+}
+
+function blinkServerRandom() {
+
+	lampServer.set(randomColor(lampServer.currentColor));
+	console.log('server set to ', lampServer.currentColor);
+    return new Promise((resolve) => setTimeout(resolve, defaultTick));
+}
+
+function randomColor(notBeingColor) {
 
 	var possibleColors = ['red','green','blue','yellow','purple','sea'];
-	var discoColor = possibleColors[Math.floor(Math.random() * possibleColors.length)];
-	if (discoColor === lastDiscoColor) {
-		discoColor = possibleColors[Math.floor(Math.random() * possibleColors.length)]
+	var randomPos = Math.floor(Math.random() * possibleColors.length);
+	var discoColor = possibleColors[randomPos];
+	if (discoColor === notBeingColor) {
+		// Move one color up if same color picked twice in a row
+		discoColor = (randomPos === possibleColors.length) ? possibleColors[0] : possibleColors[randomPos + 1];
 	}
-	lastDiscoColor = discoColor;
-	lampBamboo.set(discoColor);
-	howlong+=100;
-	// console.log('delay: ', howlong);
-    return new Promise((resolve) => setTimeout(resolve, howlong));
+	return discoColor;
 }
-

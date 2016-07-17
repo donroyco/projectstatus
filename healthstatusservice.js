@@ -3,7 +3,7 @@
 var requestP = require('request-promise');
 var q = require('q');
 
-function getServerStatus() {
+function getHealthStatus() {
 
     var defer = q.defer();
 
@@ -16,9 +16,6 @@ function getServerStatus() {
         }
     })
     .catch(function (err) {
-        // parsing failed 
-        // console.log('error index: ', err);
-        defer.resolve('error');
         defer.resolve({'value':'error', 'info': err});
     });
 
@@ -26,6 +23,6 @@ function getServerStatus() {
 }
 
 module.exports = {
-    getServerStatus: getServerStatus
+    getHealthStatus: getHealthStatus
 };
 

@@ -1,9 +1,9 @@
 "use strict";
 
 var StatusLamp = function (startPort) {
-    this.lampRed = startPort;
-    this.lampGreen = startPort +1;
-    this.lampBlue = startPort +2;
+    this.lampRedPort = startPort;
+    this.lampGreenPort = startPort +1;
+    this.lampBluePort = startPort +2;
     this.currentColor = 'off';
   }
 
@@ -13,53 +13,53 @@ StatusLamp.prototype = {
         // Somehow use a C process to set the color
         let lColor = color.toLowerCase();
         if (color !== this.currentColor) {
-		this.currentColor = color;
-        setColor(this.lampRed, 'off');
-        setColor(this.lampGreen, 'off');
-        setColor(this.lampBlue, 'off');
+    		this.currentColor = color;
+            setColor(this.lampRedPort, 'off');
+            setColor(this.lampGreenPort, 'off');
+            setColor(this.lampBluePort, 'off');
 
-        switch (lColor) {
-               case 'red': 
-                    setColor(this.lampRed, 'on');
-               break;
-               case 'green': 
-                    setColor(this.lampGreen, 'on');
-               break;
-               case 'successful': 
-                    setColor(this.lampGreen, 'on');
-               break;
-               case 'blue': 
-                    setColor(this.lampBlue, 'on');
-               break;
-               case 'yellow': 
-                    setColor(this.lampRed, 'on');
-                    setColor(this.lampGreen, 'on');
-               break;
-               case 'purple': 
-                    setColor(this.lampRed, 'on');
-                    setColor(this.lampBlue, 'on');
-               break;
-               case 'sea': 
-                    setColor(this.lampGreen, 'on');
-                    setColor(this.lampBlue, 'on');
-               break;
-               case 'all': 
-                    setColor(this.lampRed, 'on');
-                    setColor(this.lampGreen, 'on');
-                    setColor(this.lampBlue, 'on');
-               break;
-               case 'off': 
-                    setColor(this.lampRed, 'off');
-                    setColor(this.lampGreen, 'off');
-                    setColor(this.lampBlue, 'off');
-               break;
-               //default;
-        }
-	}
+            switch (lColor) {
+                   case 'red': 
+                        setColor(this.lampRedPort, 'on');
+                   break;
+                   case 'green': 
+                        setColor(this.lampGreenPort, 'on');
+                   break;
+                   case 'successful': 
+                        setColor(this.lampGreenPort, 'on');
+                   break;
+                   case 'blue': 
+                        setColor(this.lampBluePort, 'on');
+                   break;
+                   case 'yellow': 
+                        setColor(this.lampRedPort, 'on');
+                        setColor(this.lampGreenPort, 'on');
+                   break;
+                   case 'purple': 
+                        setColor(this.lampRedPort, 'on');
+                        setColor(this.lampBluePort, 'on');
+                   break;
+                   case 'sea': 
+                        setColor(this.lampGreenPort, 'on');
+                        setColor(this.lampBluePort, 'on');
+                   break;
+                   case 'all': 
+                        setColor(this.lampRedPort, 'on');
+                        setColor(this.lampGreenPort, 'on');
+                        setColor(this.lampBluePort, 'on');
+                   break;
+                   case 'off': 
+                        setColor(this.lampRedPort, 'off');
+                        setColor(this.lampGreenPort, 'off');
+                        setColor(this.lampBluePort, 'off');
+                   break;
+                   //default;
+            }
+    	}
 
-        function setColor(lampColor, state) {
+        function setColor(lampPort, state) {
             // Do the exec
-            var command = `crelay ${lampColor} ${state}`;
+            var command = `crelay ${lampPort} ${state}`;
 
             var exec = require('child_process').execSync;
             try {
@@ -67,7 +67,6 @@ StatusLamp.prototype = {
             } catch (e) {
 
             }
-
         }
     }
 };

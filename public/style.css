@@ -14,7 +14,7 @@ button {
 }
 
 #bambooStatusIndicator,
-#backendStatusIndicator {
+#healthStatusIndicator {
 	width: 30px;
 	height: 30px;
 	border: 1px solid grey;
@@ -25,7 +25,7 @@ button {
     position: relative;	
 }
 #bambooStatusIndicator.successful,
-#backendStatusIndicator.up {
+#healthStatusIndicator.up {
 	background: url(StatusGreen.png);
 	background-size: 99%;
 }
@@ -34,21 +34,21 @@ button {
 	background-size: 99%;
 }
 #bambooStatusIndicator.error,
-#backendStatusIndicator.error {
+#healthStatusIndicator.error {
 	background: url(StatusPurple.png);
 	background-size: 99%;
 }
-#backendStatusIndicator.shaky {
+#healthStatusIndicator.shaky {
 	background: #ffff00;
 }
 #bambooStatusIndicator.failed, 
-#backendStatusIndicator.down {
+#healthStatusIndicator.down {
 	background: url(StatusRed.png);
 	background-size: 99%;
 }
 
 #bambooStatusIndicator.disco, 
-#backendStatusIndicator.disco {
+#healthStatusIndicator.disco {
 	background: url(statusdisco.gif);
 	background-size: 99%;
 }

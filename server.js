@@ -27,10 +27,10 @@ var isAllOff = false;
 var overruleOfficeHours = false;
 
 var lastBambooStatus = 'unknown';
-var lastServerStatus = 'unknown';
+var lastHealthStatus = 'unknown';
 
 var bambooStatusService = require('./bamboostatusservice');
-var serverStatusService = require('./serverstatusservice');
+var healthStatusService = require('./healthstatusservice');
 
 // Process ticks...
 var ticker = setInterval(function() {
@@ -52,8 +52,8 @@ function update() {
 		bambooStatusService.getBambooStatus(projectName)
 		.then(processBambooStatus); 
 
-		serverStatusService.getServerStatus()
-		.then(processServerStatus); 
+		healthStatusService.getHealthStatus()
+		.then(processHealthStatus); 
 
 	} else {
 
@@ -85,14 +85,6 @@ function inOfficeHours() {
 
 function processBambooStatus(bambooStatus) {
 
-	var statusMessage = 'Status bamboo: ' + bambooStatus.value;
-	//console.log(statusMessage);
-
-	//	io.sockets.emit('status', {value: statusMessage});	
-	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'successful') {
-		//display.buzz();
-		display.allDisco(bambooStatus.value);
-	}
 	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'failed') {
 		display.buzz();
 	}
@@ -102,31 +94,29 @@ function processBambooStatus(bambooStatus) {
 	io.sockets.emit('lightBamboo', bambooStatus);	
 }
 
-function processServerStatus(serverStatus) {
+function processHealthStatus(healthStatus) {
 
-	var statusMessage = 'Status server: ' + serverStatus.value;
-	//console.log(statusMessage);
+	console.log('biddie ', healthStatus);
+	lastHealthStatus = healthStatus.value;
+	display.setHealthStatus(healthStatus.value);
 
-	lastServerStatus = serverStatus.value;
-	display.setHealthStatus(serverStatus.value);
-
-	io.sockets.emit('lightBackend', serverStatus);	
+	io.sockets.emit('lightHealth', healthStatus);	
 }
 
 io.sockets.on('connection', function (socket) {
 
-	socket.on('bamboo', function (data) {
-		//console.log("bamboo found " + data.value);
+	socket.on('evtBamboo', function (data) {
 		processBambooStatus(data);
 	}); 
 
-	socket.on('backend', function (data) {
-		//console.log("backend found " + data.value);
-		processServerStatus(data);
+	socket.on('evtHealth', function (data) {
+		console.log('health enforced');
+		processHealthStatus(data);
 	}); 
 
 	socket.on('allDisco', function (data) {
-		display.allDisco(lastBambooStatus);
+		console.log('all disco requested');
+		display.allDisco();
 	}); 
 
 	socket.on('aBuzz', function (data) {
@@ -134,7 +124,9 @@ io.sockets.on('connection', function (socket) {
 	}); 
 
 	socket.on('officeHours', function (data) {
+		console.log('office hours overruled: ', data);
 		overruleOfficeHours = data;
+		update();
 	}); 
 
 	socket.on('quitAll', function (data) {
