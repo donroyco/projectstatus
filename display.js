@@ -5,20 +5,26 @@ let Buzzer = require('./statusBuzzer');
 var q = require('q');
 
 
-var lampBamboo = new Lamps(1);
-var lampHealth = new Lamps(4);
-var buzzer = new Buzzer(7);
+var lampBamboo, lampHealth, buzzer;
 
 var defaultTick = 200;
 var shortTick = 250;
 
 module.exports = {
+	init: init,
     setBambooStatus: setBambooStatus,
     setHealthStatus: setHealthStatus,
     buzz: buzz,
     allOff: allOff, 
     allDisco: allDisco
 };
+
+function init(config) {
+
+	lampBamboo = new Lamps(config.lampBambooConfig);
+	lampHealth = new Lamps(config.lampHealthConfig);
+	buzzer = new Buzzer(config.buzzerPort);
+}
 
 function setBambooStatus(status) {
 	if (status === 'successful') {

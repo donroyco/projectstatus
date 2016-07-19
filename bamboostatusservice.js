@@ -3,11 +3,7 @@
 var requestP = require('request-promise');
 var q = require('q');
 
-var BambooStatus = function (portConfig, projectName) {
-    this.lampRedPort = portConfig.lampRedPort;
-    this.lampGreenPort = portConfig.lampGreenPort;
-    this.lampBluePort = portConfig.lampBluePort;
-    this.currentColor = 'off';
+var BambooStatus = function (projectName) {
     this.projectName = projectName;
 }
 

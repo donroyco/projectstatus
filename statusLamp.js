@@ -1,9 +1,9 @@
 "use strict";
 
-var StatusLamp = function (startPort) {
-    this.lampRedPort = startPort;
-    this.lampGreenPort = startPort +1;
-    this.lampBluePort = startPort +2;
+var StatusLamp = function (config) {
+    this.lampRedPort = config.lampRedPort;
+    this.lampGreenPort = config.lampGreenPort;
+    this.lampBluePort = config.lampBluePort;
     this.currentColor = 'off';
   }
 

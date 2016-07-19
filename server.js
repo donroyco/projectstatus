@@ -24,14 +24,10 @@ nconf.argv()
    .file({ file: 'config-mywp.json' })
    .load();
 
- console.log(nconf.get('projectname'));
-
-
 var display = require('./display');
+display.init(nconf.get('config'));
 
 display.allOff();
-
-display.buzz();
 
 var isAllOff = false;
 var overruleOfficeHours = false;
@@ -40,9 +36,9 @@ var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
 var BambooStatus = require('./bamboostatusservice');
-var bambooStatusService = new BambooStatus(nconf.get('lampBambooConfig'), nconf.get('projectname'));
+var bambooStatusService = new BambooStatus(nconf.get('projectname'));
 var HealthStatus = require('./healthstatusservice');
-var healthStatusService = new HealthStatus(nconf.get('lampBambooConfig'), nconf.get('healthURL'));
+var healthStatusService = new HealthStatus(nconf.get('config'));
 
 // Process ticks...
 var ticker = setInterval(function() {
@@ -156,5 +152,6 @@ io.sockets.on('connection', function (socket) {
 	
 });
 
-console.log("running");
+console.log("Healthcheck for project: ", nconf.get('projectname'));
+display.buzz();
 update();

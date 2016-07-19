@@ -3,13 +3,9 @@
 var requestP = require('request-promise');
 var q = require('q');
 
-var HealthStatus = function (portConfig, healthURL) {
-    this.lampRedPort = portConfig.lampRedPort;
-    this.lampGreenPort = portConfig.lampGreenPort;
-    this.lampBluePort = portConfig.lampBluePort;
-    this.currentColor = 'off';
-    this.healthURL = healthURL;
-
+var HealthStatus = function (config) {
+    this.healthURL = config.healthURL;
+    this.timeout = config.timeout;
 }
 
 // properties and methods
@@ -18,7 +14,7 @@ HealthStatus.prototype = {
 
         var defer = q.defer();
 
-        requestP({uri: this.healthURL, resolveWithFullResponse: true, timeout: 7000 })
+        requestP({uri: this.healthURL, resolveWithFullResponse: true, timeout: this.timeout })
         .then(function (response) {
             if (response.statusCode && response.statusCode < 400) {
                 defer.resolve({'value': 'up', 'info': 'up'});

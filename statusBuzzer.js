@@ -32,6 +32,4 @@ function setBuzz(port, state) {
 
 }
 
-
-
 module.exports = StatusBuzzer;
