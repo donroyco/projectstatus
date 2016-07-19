@@ -39,8 +39,10 @@ var overruleOfficeHours = false;
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
-var bambooStatusService = require('./bamboostatusservice');
-var healthStatusService = require('./healthstatusservice');
+var BambooStatus = require('./bamboostatusservice');
+var bambooStatusService = new BambooStatus(nconf.get('lampBambooConfig'), nconf.get('projectname'));
+var HealthStatus = require('./healthstatusservice');
+var healthStatusService = new HealthStatus(nconf.get('lampBambooConfig'), nconf.get('healthURL'));
 
 // Process ticks...
 var ticker = setInterval(function() {

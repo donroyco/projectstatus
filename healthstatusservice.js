@@ -3,26 +3,36 @@
 var requestP = require('request-promise');
 var q = require('q');
 
-function getHealthStatus() {
+var HealthStatus = function (portConfig, healthURL) {
+    this.lampRedPort = portConfig.lampRedPort;
+    this.lampGreenPort = portConfig.lampGreenPort;
+    this.lampBluePort = portConfig.lampBluePort;
+    this.currentColor = 'off';
+    this.healthURL = healthURL;
 
-    var defer = q.defer();
-
-    requestP({uri: 'https://www.ute1.klm.com/ams/beta/myweb/api/customer/current', resolveWithFullResponse: true, timeout: 7000 })
-    .then(function (response) {
-        if (response.statusCode && response.statusCode < 400) {
-            defer.resolve({'value': 'up', 'info': 'up'});
-        } else {
-            defer.resolve({'value': 'down', 'info': 'down'});
-        }
-    })
-    .catch(function (err) {
-        defer.resolve({'value':'error', 'info': err.message});
-    });
-
-    return defer.promise;
 }
 
-module.exports = {
-    getHealthStatus: getHealthStatus
-};
+// properties and methods
+HealthStatus.prototype = {
+        getHealthStatus: function() {
+
+        var defer = q.defer();
+
+        requestP({uri: this.healthURL, resolveWithFullResponse: true, timeout: 7000 })
+        .then(function (response) {
+            if (response.statusCode && response.statusCode < 400) {
+                defer.resolve({'value': 'up', 'info': 'up'});
+            } else {
+                defer.resolve({'value': 'down', 'info': 'down'});
+            }
+        })
+        .catch(function (err) {
+            defer.resolve({'value':'error', 'info': err.message});
+        });
+
+        return defer.promise;
+    }
+}
+
+module.exports = HealthStatus;
 

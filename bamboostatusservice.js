@@ -3,41 +3,51 @@
 var requestP = require('request-promise');
 var q = require('q');
 
-function getBambooStatus(projectName) {
+var BambooStatus = function (portConfig, projectName) {
+    this.lampRedPort = portConfig.lampRedPort;
+    this.lampGreenPort = portConfig.lampGreenPort;
+    this.lampBluePort = portConfig.lampBluePort;
+    this.currentColor = 'off';
+    this.projectName = projectName;
+}
 
-    var defer = q.defer();
+// properties and methods
+BambooStatus.prototype = {
+    getBambooStatus: function () {
+        var defer = q.defer();
 
-    var lastStatus = 'unknown';
-    // see if building
-    requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
-    .then(function (bamboo) {
-    	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
-            defer.resolve({'value': 'building', 'info': 'building'});
-    	} else {
-    		// see list of last builds
-    		requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/rest/api/latest/result/${projectName}.json`))
-    		.then(function (lastRuns) {
-	    		// see details of last build
-    			if (lastRuns.results.result[0].link.href) {
-    				requestP(uriWithOptionForJason(lastRuns.results.result[0].link.href))
-    				.then(function(result) {
-    					//console.log(`Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `);
-    					defer.resolve({'value': result.buildState.toLowerCase(),
-                            'info': `Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `});
-    				})
-    			} else {
-                    defer.resolve({'value': 'error', 'info': 'unknown error'});
-                }
-    		})
-    	}
-    })
-    .catch(function (err) {
-        // parsing failed 
-        console.log('error index: ', err);
-        defer.resolve({'value': 'error', 'info': err.message});
-    });
+        var lastStatus = 'unknown';
+        // see if building
+        requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${this.projectName}`))
+        .then(function (bamboo) {
+        	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
+                defer.resolve({'value': 'building', 'info': 'building'});
+        	} else {
+        		// see list of last builds
+        		requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/rest/api/latest/result/${projectName}.json`))
+        		.then(function (lastRuns) {
+    	    		// see details of last build
+        			if (lastRuns.results.result[0].link.href) {
+        				requestP(uriWithOptionForJason(lastRuns.results.result[0].link.href))
+        				.then(function(result) {
+        					//console.log(`Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `);
+        					defer.resolve({'value': result.buildState.toLowerCase(),
+                                'info': `Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `});
+        				})
+        			} else {
+                        defer.resolve({'value': 'error', 'info': 'unknown error'});
+                    }
+        		})
+        	}
+        })
+        .catch(function (err) {
+            // parsing failed 
+            console.log('error index: ', err);
+            defer.resolve({'value': 'error', 'info': err.message});
+        });
 
-    return defer.promise;
+        return defer.promise;
+    }
 }
 
 function uriWithOptionForJason(uri) {
@@ -53,11 +63,9 @@ function uriWithOptionForJason(uri) {
     };
 }
 
-module.exports = {
-    getBambooStatus: getBambooStatus
-};
+module.exports = BambooStatus;
 
-function getAverageBuildTime(projectName) {
-	// Do this later, get rest details for evey result, count successfull and average buildtimes
-	// Only do this when starting the process.
-}
+// function getAverageBuildTime(projectName) {
+// 	// Do this later, get rest details for evey result, count successfull and average buildtimes
+// 	// Only do this when starting the process.
+// }
