@@ -1,5 +1,4 @@
 "use strict";
-var q = require('q');
 
 var StatusBuzzer = function (port) {
     this.buzzerPort = port;
@@ -14,20 +13,10 @@ StatusBuzzer.prototype = {
 		setBuzz(this.buzzerPort, 'off');    	
     },
     buzz: function(howLong) {
-        let buzzer = this.onAndWait()
-                .then(this.offAndWait)
-                .then(this.onAndWait)
-                .then(() => {
-                    this.buzzOff
-                    });
-    },
-    onAndWait: function() {
         this.buzzOn();
-        return new Promise((resolve) => setTimeout(resolve, 500));
-    },
-    offAndWait: function() {
-        this.buzzOff();
-        return new Promise((resolve) => setTimeout(resolve, 500));
+        setTimeout(this.buzzOff.bind(this), howLong);
+        setTimeout(this.buzzOn.bind(this), howLong * 2);
+        setTimeout(this.buzzOff.bind(this), howLong * 3);
     }
 
 };
