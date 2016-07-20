@@ -24,6 +24,10 @@ nconf.argv()
    .file({ file: 'config-mywp.json' })
    .load();
 
+
+io.sockets.emit('heading1', 'Health status for ' + nconf.get('projectname'));
+
+
 var display = require('./display');
 display.init(nconf.get('config'));
 
@@ -50,6 +54,7 @@ var ticker = setInterval(function() {
 function update() {
 
 	io.sockets.emit('generalInfo', 'Checking Project Status');	
+	io.sockets.emit('heading1', 'Health status for ' + nconf.get('projectname'));
 	
 	if (inOfficeHours()) {
 		if (isAllOff) {

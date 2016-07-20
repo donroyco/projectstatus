@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-	<title>ProjectStatus</title>
+	<title>ProjectHealth</title>
 	
 	<script src="socket.io/socket.io.js"></script>
 	<link rel="stylesheet" href="style.css">
@@ -9,14 +9,14 @@
   </head>
   <body>
   <div id="main" class="container">
-  	  <h1>Myweb dev status</h1>
+  	  <h1 id="heading1">Health status</h1>
 
 	  <div class="row">
 		<div class="span12">
 			<H2>HEALTH <span id="healthStatusIndicator"></span></H2>
 			<button onclick="setHealthStatus('up');">Up & Running</button>
 			<button onclick="setHealthStatus('down');">Down</button>
-			<div id="healthInfo">...</div>
+			<div id="healthInfo" class="infoline">...</div>
 		</div>
 	</div>
 
@@ -26,7 +26,7 @@
 			<button onclick="setBambooStatus('successful');">Ok</button>
 			<button onclick="setBambooStatus('building');">Building</button>
 			<button onclick="setBambooStatus('failed');">Failed</button>
-			<div id="bambooInfo">...</div>
+			<div id="bambooInfo" class="infoline">...</div>
 		</div>
 	</div>
 
@@ -38,7 +38,7 @@
 <button onclick="quitAll();">Quit process</button>
 <button onclick="allDisco();">Dont press</button>
 <button onclick="aBuzz();">Attention</button>
-<div id="generalInfo">...</div>
+<div id="generalInfo" class="infoline">...</div>
 
 
 
@@ -57,6 +57,10 @@
 	
 	socket.on('generalInfo', function (data) {
 		document.getElementById("generalInfo").innerHTML = data;
+	});
+	
+	socket.on('heading1', function (data) {
+		document.getElementById("heading1").innerHTML = data;
 	});
 	
 	function updateNow() {

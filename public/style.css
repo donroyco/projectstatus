@@ -1,16 +1,33 @@
 body {
 	margin: 50px 50px;
 	background: #fff;
-	font-family: monospace;
+	font-family: arial;
+    color: #2dbaf3;
 }
 li { 
 	list-style-type:none; 
 } 
 button {
-	margin: 10px;
-	background: grey;
-	font-size: 1.2em;
-	color: white;
+    margin: 0px 2px 12px 2px;
+    padding: 10px;
+    background: grey;
+    font-size: 16px;
+    color: white;
+    background-color: #2dbaf3;
+}
+h1 {
+	font-size: 30px;
+    line-height: 25px;
+}
+h2 {
+	font-size: 24px;
+	line-height: 20px;
+}
+
+.infoline {
+	font-family: monospace;
+	font-size: 16px;
+	color: gray;
 }
 
 #bambooStatusIndicator,
