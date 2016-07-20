@@ -20,7 +20,6 @@ module.exports = {
 };
 
 function init(config) {
-
 	lampBamboo = new Lamps(config.lampBambooConfig);
 	lampHealth = new Lamps(config.lampHealthConfig);
 	buzzer = new Buzzer(config.buzzerPort);

@@ -69,7 +69,9 @@ function update() {
 			display.allOff();
 			isAllOff = true;
 			console.log('After office hours');
-			io.sockets.emit('generalInfo', 'Outside Office Hours');	
+			var curtime = new Date().toISOString().slice(0,16).replace('T', ' ');
+			console.log('Since i think its' , curtime);
+			io.sockets.emit('generalInfo', 'Outside Office Hours, ' + curtime);	
 		}
 	}
 
