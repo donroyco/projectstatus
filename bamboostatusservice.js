@@ -11,10 +11,11 @@ var BambooStatus = function (projectName) {
 BambooStatus.prototype = {
     getBambooStatus: function () {
         var defer = q.defer();
+        var projectName = this.projectName;
 
         var lastStatus = 'unknown';
         // see if building
-        requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${this.projectName}`))
+        requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
         .then(function (bamboo) {
         	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
                 defer.resolve({'value': 'building', 'info': 'building'});
