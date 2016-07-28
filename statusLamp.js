@@ -4,7 +4,7 @@ var StatusLamp = function (config) {
     this.lampRedPort = config.portRed;
     this.lampGreenPort = config.portGreen;
     this.lampBluePort = config.portBlue;
-    this.currentColor = 'off';
+    this.currentColor = 'initial';
   }
 
 // properties and methods
