@@ -5,7 +5,7 @@ var socketPort = 8081;
 
 var tickTimeSeconds = 30;
 var startAt = '07:30'; // Preceding zero
-var endAt = '16:30';
+var endAt = '18:30';
 
 // Dependencies
 
