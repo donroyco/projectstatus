@@ -56,6 +56,7 @@ function allOff() {
 }
 
 var howlong = 25;
+var lastDiscoColor = 'unknown';
 function allDisco(toStatus) {
 	howlong = 25;
 	let disco = blinkRandomColor()
@@ -70,9 +71,14 @@ function allDisco(toStatus) {
 function blinkRandomColor() {
 
 	var possibleColors = ['red','green','blue','yellow','purple','sea'];
-	lampBamboo.set(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
-	howlong = howlong * 2;
-	console.log('delay: ', howlong);
+	var discoColor = possibleColors[Math.floor(Math.random() * possibleColors.length)];
+	if (discoColor === lastDiscoColor) {
+		discoColor = possibleColors[Math.floor(Math.random() * possibleColors.length)]
+	}
+	lastDiscoColor = discoColor;
+	lampBamboo.set(discoColor);
+	howlong+=100;
+	// console.log('delay: ', howlong);
     return new Promise((resolve) => setTimeout(resolve, howlong));
 }
 
