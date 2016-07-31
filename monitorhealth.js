@@ -147,7 +147,7 @@ io.sockets.on('connection', function (socket) {
 	}); 
 
 	socket.on('sayText', function (data) {
-		speaker.say(data);
+		speaker.say(data.value);
 	}); 
 
 	socket.on('officeHours', function (data) {
@@ -168,6 +168,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 console.log("Healthcheck for project: ", nconf.get('projectname'));
+speaker.say('Hello, my name is Bluey');
 display.buzz();
-speaker.say('hello world');
+
 update();
