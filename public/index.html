@@ -38,9 +38,11 @@
 <button onclick="quitAll();">Quit process</button>
 <button onclick="allDisco();">Dont press</button>
 <button onclick="aBuzz();">Attention</button>
+<button onclick="sayOutLoud('Please stand up!');">Standup</button>
 <div id="generalInfo" class="infoline">...</div>
-
-
+<br>
+<input type="text" name="saytext" id="sayText" value="" size="50">&nbsp
+<button onclick="sayOutLoud(document.getElementById('sayText').value)">Say out loud</button>
 
 <script type="text/javascript">
 	var socket = io.connect();
@@ -73,6 +75,11 @@
 
 	function setHealthStatus(statusHealth) {
 		socket.emit('evtHealth', { value: statusHealth, info: 'set manually in frontend'  });
+	}
+
+	function sayOutLoud(textToSay) {
+		//var text = document.getElementById("sayText").value;
+		socket.emit('sayText', { value: textToSay  });
 	}
 
 	function quitAll() {

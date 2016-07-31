@@ -105,6 +105,7 @@ function processBambooStatus(bambooStatus) {
 
 	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'failed') {
 		display.buzz();
+		// Speak about buildbreaker and stroepiewaffels here
 	}
 	lastBambooStatus = bambooStatus.value;
 	display.setBambooStatus(bambooStatus.value);
@@ -143,6 +144,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('aBuzz', function (data) {
 		display.buzz();
+	}); 
+
+	socket.on('sayText', function (data) {
+		speaker.say(data);
 	}); 
 
 	socket.on('officeHours', function (data) {

@@ -24,6 +24,11 @@ h2 {
 	line-height: 20px;
 }
 
+input {
+	line-height: 30px;
+	margin-bottom: 5px;
+}
+
 .infoline {
 	font-family: monospace;
 	font-size: 16px;
