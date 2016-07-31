@@ -7,20 +7,13 @@ var Speaker = function (config) {
 // properties and methods
 Speaker.prototype = {
     say: function(message) {
-        // use a C process to say the words
-        sayText(message, this.voice);
-    	}
+        var command = `flite -voice ${this.voice} -t ${message}`;
 
-        function sayText(message, voice) {
-            // Do the exec
-            var command = `flite -voice ${voice} -t ${message}`;
+        var exec = require('child_process').execSync;
+        try {
+            exec(command, function(error, stdout, stderr) {});
+        } catch (e) {
 
-            var exec = require('child_process').execSync;
-            try {
-                exec(command, function(error, stdout, stderr) {});
-            } catch (e) {
-
-            }
         }
     }
 };

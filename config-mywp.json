@@ -4,6 +4,7 @@
 		 "lampHealthConfig": {"portRed": 4, "portGreen": 5, "portBlue": 6},
 		 "buzzerPort": 7,
 		 "healthURL" : "https://www.ute1.klm.com/ams/beta/myweb/api/customer/current",
-		 "timeout" : 7000
+		 "timeout" : 7000, 
+		 "voice": "slt" 
  	}
  }

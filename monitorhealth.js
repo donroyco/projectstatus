@@ -33,6 +33,9 @@ display.init(nconf.get('config'));
 
 display.allOff();
 
+var Speaker = require('./speaker');
+var speaker = new Speaker(nconf.get('config'));
+
 var isAllOff = false;
 var overruleOfficeHours = false;
 
@@ -161,4 +164,5 @@ io.sockets.on('connection', function (socket) {
 
 console.log("Healthcheck for project: ", nconf.get('projectname'));
 display.buzz();
+speaker.say('hello world');
 update();
