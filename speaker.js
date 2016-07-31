@@ -7,7 +7,9 @@ var Speaker = function (config) {
 // properties and methods
 Speaker.prototype = {
     say: function(message) {
-        var command = `flite -voice ${this.voice} -t ${message}`;
+
+        var command = `flite -voice ${this.voice} -t '${message}'`;
+	console.log('executing ', command);
 
         var exec = require('child_process').execSync;
         try {

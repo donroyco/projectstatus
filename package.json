@@ -17,6 +17,7 @@
   "main": "main",
   "dependencies": {
     "express": "^4.13.4",
+    "flite": "^0.1.2",
     "nconf": "^0.8.4",
     "node-hid": "^0.5.1",
     "q": "^1.4.1",
