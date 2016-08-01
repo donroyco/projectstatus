@@ -70,11 +70,11 @@
 	}
 
 	function setBambooStatus(statusBamboo) {
-		socket.emit('evtBamboo', { value: statusBamboo, info: 'set manually in frontend'});
+		socket.emit('evtBamboo', { value: statusBamboo, info: 'set manually in frontend', reason: 'Caused by <manual action>' });
 	}
 
 	function setHealthStatus(statusHealth) {
-		socket.emit('evtHealth', { value: statusHealth, info: 'set manually in frontend'  });
+		socket.emit('evtHealth', { value: statusHealth, info: 'set manually in frontend' });
 	}
 
 	function sayOutLoud(textToSay) {

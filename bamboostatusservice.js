@@ -18,7 +18,7 @@ BambooStatus.prototype = {
         requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
         .then(function (bamboo) {
         	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
-                defer.resolve({'value': 'building', 'info': 'building'});
+                defer.resolve({'value': 'building', 'info': 'building', 'reason': bamboo.builds[0].triggerReason});
         	} else {
         		// see list of last builds
         		requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/rest/api/latest/result/${projectName}.json`))
@@ -29,10 +29,11 @@ BambooStatus.prototype = {
         				.then(function(result) {
         					//console.log(`Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `);
         					defer.resolve({'value': result.buildState.toLowerCase(),
-                                'info': `Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `});
+                                'info': `Build ${result.buildState}, ${result.buildRelativeTime}, took ${result.buildDurationDescription} `,
+                                'reason': blameName(result.buildReason)});
         				})
         			} else {
-                        defer.resolve({'value': 'error', 'info': 'unknown error'});
+                        defer.resolve({'value': 'error', 'info': 'unknown error', 'reason': 'unkown'});
                     }
         		})
         	}
@@ -40,11 +41,16 @@ BambooStatus.prototype = {
         .catch(function (err) {
             // parsing failed 
             console.log('error index: ', err);
-            defer.resolve({'value': 'error', 'info': err.message});
+            defer.resolve({'value': 'error', 'info': err.message, 'reason': 'unkown'});
         });
 
         return defer.promise;
     }
+}
+
+function blameName(buildReason) {
+    console.log(buildReason);
+    return buildReason.replace(/.*\<|\>/gi,'');
 }
 
 function uriWithOptionForJason(uri) {
