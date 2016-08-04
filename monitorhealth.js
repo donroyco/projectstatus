@@ -1,6 +1,5 @@
 // Config
 
-var projectName = 'MYWP-MYWPD';
 var socketPort = 8081;
 
 var tickTimeSeconds = 30;
@@ -21,11 +20,13 @@ app.use(express.static('public'));
 var nconf = require('nconf');
 nconf.argv()
    .env()
-   .file({ file: 'config-mywp.json' })
+   .file({ file: 'projectstatus-config.json' })
    .load();
 
+var projectName = nconf.get('projectname');
 
-io.sockets.emit('heading1', 'Health status for ' + nconf.get('projectname'));
+
+io.sockets.emit('heading1', 'Health status for {projectName}');
 
 
 var display = require('./display');

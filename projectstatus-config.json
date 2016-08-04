@@ -1,4 +1,4 @@
-{"projectname": "MYWP-MYWPD", 
+{"projectname": "BW-DEF", 
 	"config": {
 		 "lampBambooConfig": {"portRed": 1, "portGreen": 2, "portBlue": 3},
 		 "lampHealthConfig": {"portRed": 4, "portGreen": 5, "portBlue": 6},
