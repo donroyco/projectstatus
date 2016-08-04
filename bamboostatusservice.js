@@ -49,8 +49,11 @@ BambooStatus.prototype = {
 }
 
 function blameName(buildReason) {
-    console.log(buildReason);
-    return buildReason.replace(/.*\<|\>/gi,'');
+    var posBefore = buildReason.indexOf('>') + 1;
+    var posAfter = buildReason.indexOf(',');
+    var name2blame = buildReason.substr(posBefore, posAfter - posBefore);
+    console.log(buildReason, posBefore , posAfter, name2blame);
+    return name2blame;
 }
 
 function uriWithOptionForJason(uri) {
