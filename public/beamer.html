@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+	<title>ProjectHealth</title>
+	
+	<script src="socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="bootstrap-responsive.css">
+  </head>
+  <body class="beamer">
+  	<div id="main" class="container">
+  	 	<h1 id="heading1">Health status</h1>
+
+		<span id="healthStatusIndicator"><h2>Health</h2></span>
+		<span id="bambooStatusIndicator"><h2>Bamboo</h2></span>
+
+	</div>
+<hr>
+<div id="generalInfo" class="infoline">...</div>
+<br>
+
+<script type="text/javascript">
+	var socket = io.connect();
+	
+	socket.on('lightBamboo', function (data) {
+		document.getElementById("bambooStatusIndicator").className = data.value;
+		document.getElementById("bambooInfo").innerHTML = data.info;
+	});
+	
+	socket.on('lightHealth', function (data) {
+		document.getElementById("healthStatusIndicator").className = data.value;
+		document.getElementById("healthInfo").innerHTML = data.info;
+	});
+	
+	socket.on('generalInfo', function (data) {
+		document.getElementById("generalInfo").innerHTML = data;
+	});
+	
+	socket.on('heading1', function (data) {
+		document.getElementById("heading1").innerHTML = data;
+	});
+	
+	socket.on('allOff', function (data) {
+		document.getElementById("bambooStatusIndicator").className = '';
+		document.getElementById("healthStatusIndicator").className = '';
+	});
+
+</script>
+</body>
+</html>
