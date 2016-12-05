@@ -3,7 +3,7 @@
 		 "lampBambooConfig": {"portRed": 1, "portGreen": 2, "portBlue": 3},
 		 "lampHealthConfig": {"portRed": 4, "portGreen": 5, "portBlue": 6},
 		 "buzzerPort": 7,
-		 "healthURL" : "https://beta2-ute.klm.com/api/customer/reference-data",
+		 "healthURL" : "https://beta-ute.airfrance.com/api",
 		 "timeout" : 7000, 
 		 "voice": "rms" 
  	}
