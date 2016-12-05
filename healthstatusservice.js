@@ -6,8 +6,8 @@ var q = require('q');
 var HealthStatus = function (config) {
     this.healthURL = config.healthURL;
     this.timeout = config.timeout;
+    console.log(config.healthURL);
 }
-
 // properties and methods
 HealthStatus.prototype = {
         getHealthStatus: function() {
@@ -16,7 +16,9 @@ HealthStatus.prototype = {
 
         requestP({uri: this.healthURL, resolveWithFullResponse: true, timeout: this.timeout })
         .then(function (response) {
-            if (response.statusCode && response.statusCode < 400) {
+            if (response.socket._host && response.socket._host == 'sorry.klm.com') { // redirect to sorry page
+                defer.resolve({'value': 'error', 'info': 'unavailable'});
+            } else if (response.statusCode && response.statusCode < 400) {
                 defer.resolve({'value': 'up', 'info': 'up'});
             } else {
                 defer.resolve({'value': 'down', 'info': 'down'});
