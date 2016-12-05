@@ -6,7 +6,6 @@ var q = require('q');
 var HealthStatus = function (config) {
     this.healthURL = config.healthURL;
     this.timeout = config.timeout;
-    console.log(config.healthURL);
 }
 // properties and methods
 HealthStatus.prototype = {
