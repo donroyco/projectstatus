@@ -24,7 +24,11 @@ HealthStatus.prototype = {
             }
         })
         .catch(function (err) {
-            defer.resolve({'value':'error', 'info': err.message});
+            if (err.message.indexOf('provide query string') > -1) {
+                defer.resolve({'value': 'up', 'info': 'up'});
+            } else {
+                defer.resolve({'value':'error', 'info': err.message});
+            }
         });
 
         return defer.promise;
