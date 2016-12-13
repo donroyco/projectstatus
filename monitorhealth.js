@@ -43,8 +43,10 @@ var overruleOfficeHours = false;
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
-var BambooStatus = require('./bamboostatusservice');
-var bambooStatusService = new BambooStatus(nconf.get('projectname'));
+var BambooStatus = require('./bambooprojectstatusservice');
+var bambooStatusService = new BambooStatus(nconf.get('config'));
+//var BambooStatus = require('./bamboostatusservice');
+//var bambooStatusService = new BambooStatus(nconf.get('projectname'));
 var HealthStatus = require('./healthstatusservice');
 var healthStatusService = new HealthStatus(nconf.get('config'));
 

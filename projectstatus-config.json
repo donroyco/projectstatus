@@ -4,6 +4,7 @@
 		 "lampHealthConfig": {"portRed": 4, "portGreen": 5, "portBlue": 6},
 		 "buzzerPort": 7,
 		 "healthURL" : "https://beta-ute.airfrance.com/api",
+		 "bambookey" : "BW",
 		 "timeout" : 7000, 
 		 "voice": "rms" 
  	}
