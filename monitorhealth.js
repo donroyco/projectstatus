@@ -151,7 +151,11 @@ io.sockets.on('connection', function (socket) {
 	}); 
 
 	socket.on('sayText', function (data) {
-		speaker.say(data.value);
+		if (data.voice) {
+			speaker.say(data.value, data.voice);
+		} else {
+			speaker.say(data.value);
+		}
 	}); 
 
 	socket.on('officeHours', function (data) {
