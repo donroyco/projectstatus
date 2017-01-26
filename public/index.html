@@ -41,12 +41,10 @@
 <button onclick="sayOutLoud('Please stand up!');">Standup</button>
 <div id="generalInfo" class="infoline">...</div>
 <br>
-<input type="text" name="saytext" id="sayText" value="" size="50">&nbsp 
-<button onclick="sayOutLoud()">Say out loud</button> <br>
-
-<input type="radio" name="voice" value="rms" checked="checked">Male &nbsp;
-<input type="radio" name="voice" value="slt"> Female &nbsp;
-<input type="radio" name="voice" value="awb"> Sean &nbsp;
+<h3>For saying out loud</h3>
+<input type="text" placeholder="male voice" size="100" onkeydown="processSay(this, 'rms')"/> <br> 
+<input type="text" placeholder="female voice" size="100" onkeydown="processSay(this, 'slt')"/>  <br>
+<input type="text" placeholder="Sean" size="100" onkeydown="processSay(this, 'awb')"/>  <br>
 
 <script type="text/javascript">
 	var socket = io.connect();
@@ -81,22 +79,11 @@
 		socket.emit('evtHealth', { value: statusHealth, info: 'set manually in frontend' });
 	}
 
-	function sayOutLoud() {
-		var textToSay = document.getElementById("sayText").value;
-		var radios = document.getElementsByName("voice");
-		var voice = "rms";
-
-		var i = 0;
-		while (i < radios.length) {
-			if (radios[i].checked) {
-				voice = radios[i].value;
-			}
-			i++;        
+	function processSay(element, voice) {
+		if(event.keyCode == 13) {
+			socket.emit('sayText', { value: element.value , voice: voice });
+			element.value = "";
 		}
-		
-		console.log('voice found', voice );
-
-		socket.emit('sayText', { value: textToSay , voice: voice });
 	}
 
 	function quitAll() {
