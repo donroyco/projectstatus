@@ -35,6 +35,9 @@ function setBambooStatus(status) {
 	if (status === 'failed') {
 		lampBamboo.set('red');
 	}
+	if (status === 'nightly') {
+		lampBamboo.set('yellow');
+	}
 	if (status === 'error') {
 		lampBamboo.set('purple');
 	}

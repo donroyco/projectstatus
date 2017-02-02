@@ -20,12 +20,23 @@ BambooStatus.prototype = {
         .then(function (html) {
             var $ = cheerio.load(html);
             var isBuilding =  $('.build-details .indicator').hasClass('building');
-            var isFailed = $('.result').hasClass('Failed');
+            var isFailed = $('.result ').hasClass('Failed');
 
         	if (isBuilding) {
                 defer.resolve({'value': 'building', 'info': 'building', 'reason': 'komt nog'});
         	} else if (isFailed) {
-                defer.resolve({'value': 'failed', 'info': 'unknown error', 'reason': 'unkown'});
+                var reasonFailure = 'failed';
+                var failureInfo = 'unknown error';
+                
+                var failedBuilds = $('.result.Failed');
+                if (failedBuilds.length === 1) {
+                    if (failedBuilds.find('a').attr('href').indexOf('BW-BWAPINIG') > -1) {
+                        reasonFailure = 'nightly';         
+                        failureInfo = 'Load test Failed';
+                    }
+                }
+
+                defer.resolve({'value': reasonFailure, 'info': failureInfo, 'reason': 'unkown'});
         	} else {
                 defer.resolve({'value': 'successful', 'info': 'TODO', 'reason': 'unkown'});
         	}

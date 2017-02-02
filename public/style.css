@@ -83,7 +83,8 @@ input {
 	background-size: 99%;
 	background-repeat: no-repeat;
 }
-#healthStatusIndicator.shaky {
+#healthStatusIndicator.shaky,
+#bambooStatusIndicator.nightly {
 	background: #ffff00;
 }
 #bambooStatusIndicator.failed, 
