@@ -15,13 +15,13 @@ BambooStatus.prototype = {
 
         var lastStatus = 'unknown';
         // see if building
-        requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
+        requestP(uriWithOptionForJason(`https://bamboo.devnet.klm.com/chain/admin/ajax/getChains.action?planKey=${projectName}`))
         .then(function (bamboo) {
         	if (bamboo.builds[0] && bamboo.builds[0].status === 'BUILDING') {
                 defer.resolve({'value': 'building', 'info': 'building', 'reason': bamboo.builds[0].triggerReason});
         	} else {
         		// see list of last builds
-        		requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/rest/api/latest/result/${projectName}.json`))
+        		requestP(uriWithOptionForJason(`https://bamboo.devnet.klm.com/rest/api/latest/result/${projectName}.json`))
         		.then(function (lastRuns) {
     	    		// see details of last build
         			if (lastRuns.results.result[0].link.href) {

@@ -12,16 +12,14 @@
   	  <h1 id="heading1">Health status</h1>
 
 	  <div class="row">
-		<div class="span12">
+		<div class="span6">
 			<H2>HEALTH <span id="healthStatusIndicator"></span></H2>
 			<button onclick="setHealthStatus('up');">Up & Running</button>
 			<button onclick="setHealthStatus('down');">Down</button>
 			<div id="healthInfo" class="infoline">...</div>
 		</div>
-	</div>
 
-	  <div class="row">
-		<div class="span12">
+		<div class="span6">
 			<h2>BAMBOO <span id="bambooStatusIndicator"></span></h2>
 			<button onclick="setBambooStatus('successful');">Ok</button>
 			<button onclick="setBambooStatus('building');">Building</button>
@@ -32,6 +30,11 @@
 
 </div>
 <hr>
+<h3>For saying out loud</h3>
+<input type="text" placeholder="male voice" size="100" onkeydown="processSay(this, 'rms')"/> <br> 
+<input type="text" placeholder="female voice" size="100" onkeydown="processSay(this, 'slt')"/>  <br>
+<input type="text" placeholder="Sean" size="100" onkeydown="processSay(this, 'awb')"/>  <br>
+<br>
 <button onclick="updateNow();">Run now</button>
 <button id="btnOverruleOfficeHours" onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
 <button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
@@ -41,10 +44,6 @@
 <button onclick="sayOutLoud('Please stand up!');">Standup</button>
 <div id="generalInfo" class="infoline">...</div>
 <br>
-<h3>For saying out loud</h3>
-<input type="text" placeholder="male voice" size="100" onkeydown="processSay(this, 'rms')"/> <br> 
-<input type="text" placeholder="female voice" size="100" onkeydown="processSay(this, 'slt')"/>  <br>
-<input type="text" placeholder="Sean" size="100" onkeydown="processSay(this, 'awb')"/>  <br>
 
 <script type="text/javascript">
 	var socket = io.connect();

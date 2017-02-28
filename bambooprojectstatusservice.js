@@ -16,7 +16,7 @@ BambooStatus.prototype = {
 
         var lastStatus = 'unknown';
         // see if building
-        requestP(uriWithOptionForJason(`https://bamboo.eden.klm.com/telemetry.action?filter=project&projectKey=${bambookey}`))
+        requestP(uriWithOptionForJason(`https://bamboo.devnet.klm.com/telemetry.action?filter=project&projectKey=${bambookey}`))
         .then(function (html) {
             var $ = cheerio.load(html);
             var isBuilding =  $('.build-details .indicator').hasClass('building');
