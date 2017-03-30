@@ -41,7 +41,7 @@
 <button onclick="quitAll();">Quit process</button>
 <button onclick="allDisco();">Dont press</button>
 <button onclick="aBuzz();">Attention</button>
-<button onclick="sayOutLoud('Please stand up!');">Standup</button>
+<button onclick="aGong();">Standup</button>
 <div id="generalInfo" class="infoline">...</div>
 <br>
 
@@ -109,6 +109,10 @@
 
 	function aBuzz() {
 		socket.emit('aBuzz', {});
+	}
+
+	function aGong() {
+		socket.emit('aGong', {});
 	}
 
 	socket.on('allOff', function (data) {

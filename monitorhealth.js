@@ -37,6 +37,9 @@ display.allOff();
 var Speaker = require('./speaker');
 var speaker = new Speaker(nconf.get('config'));
 
+var Gong = require('./gong');
+var gong = new Gong();
+
 var isAllOff = false;
 var overruleOfficeHours = false;
 
@@ -148,6 +151,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('aBuzz', function (data) {
 		display.buzz();
+	}); 
+
+	socket.on('aGong', function (data) {
+		gong.play();
 	}); 
 
 	socket.on('sayText', function (data) {
