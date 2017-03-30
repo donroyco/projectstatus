@@ -6,7 +6,7 @@ var Gong = function () {
 // properties and methods
 Gong.prototype = {
     play: function () {
-		var command = `afplay gong.mp3`;
+		var command = `afplay gong.mp3 -v 255`;
 
 		var exec = require('child_process').execSync;
 		try {
