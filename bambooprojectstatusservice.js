@@ -30,7 +30,8 @@ BambooStatus.prototype = {
                 
                 var failedBuilds = $('.result.Failed');
                 if (failedBuilds.length === 1) {
-                    if (failedBuilds.find('a').attr('href').indexOf('BW-BWAPINIG') > -1) {
+                    if (failedBuilds.find('a').attr('href').indexOf('BW-BWAPINIG') > -1 ||
+                        failedBuilds.find('a').attr('href').indexOf('BW-AE2ENIG') > -1) {
                         reasonFailure = 'nightly';         
                         failureInfo = 'Load test Failed';
                     }
