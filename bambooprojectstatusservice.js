@@ -39,7 +39,7 @@ BambooStatus.prototype = {
 
                 defer.resolve({'value': reasonFailure, 'info': failureInfo, 'reason': 'unkown'});
         	} else {
-                defer.resolve({'value': 'successful', 'info': 'TODO', 'reason': 'unkown'});
+                defer.resolve({'value': 'successful', 'info': 'Last run OK', 'reason': 'unkown'});
         	}
         })
         .catch(function (err) {
