@@ -154,7 +154,7 @@ io.sockets.on('connection', function (socket) {
 	}); 
 
 	socket.on('aGong', function (data) {
-		gong.play();
+		gong.play(data.what);
 	}); 
 
 	socket.on('sayText', function (data) {

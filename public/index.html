@@ -14,16 +14,16 @@
 	  <div class="row">
 		<div class="span6">
 			<H2>HEALTH <span id="healthStatusIndicator"></span></H2>
-			<button onclick="setHealthStatus('up');">Up & Running</button>
-			<button onclick="setHealthStatus('down');">Down</button>
+			<!-- <button onclick="setHealthStatus('up');">Up & Running</button>
+			<button onclick="setHealthStatus('down');">Down</button> -->
 			<div id="healthInfo" class="infoline">...</div>
 		</div>
 
 		<div class="span6">
 			<h2>BAMBOO <span id="bambooStatusIndicator"></span></h2>
-			<button onclick="setBambooStatus('successful');">Ok</button>
+			<!-- <button onclick="setBambooStatus('successful');">Ok</button>
 			<button onclick="setBambooStatus('building');">Building</button>
-			<button onclick="setBambooStatus('failed');">Failed</button>
+			<button onclick="setBambooStatus('failed');">Failed</button> -->
 			<div id="bambooInfo" class="infoline">...</div>
 		</div>
 	</div>
@@ -33,15 +33,17 @@
 <h3>For saying out loud</h3>
 <input type="text" placeholder="male voice" size="100" onkeydown="processSay(this, 'rms')"/> <br> 
 <input type="text" placeholder="female voice" size="100" onkeydown="processSay(this, 'slt')"/>  <br>
-<input type="text" placeholder="Sean" size="100" onkeydown="processSay(this, 'awb')"/>  <br>
+<!-- <input type="text" placeholder="Sean" size="100" onkeydown="processSay(this, 'awb')"/>  <br> -->
 <br>
 <button onclick="updateNow();">Run now</button>
-<button id="btnOverruleOfficeHours" onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
+<!-- <button id="btnOverruleOfficeHours" onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
 <button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
-<button onclick="quitAll();">Quit process</button>
+<button onclick="quitAll();">Quit process</button> -->
 <button onclick="allDisco();">Dont press</button>
 <button onclick="aBuzz();">Attention</button>
 <button onclick="aGong();">Standup</button>
+<button onclick="aGong('gong');">Standup</button>
+<button onclick="aGong('cantpublish');">Cant Publish</button>
 <div id="generalInfo" class="infoline">...</div>
 <br>
 
@@ -111,8 +113,8 @@
 		socket.emit('aBuzz', {});
 	}
 
-	function aGong() {
-		socket.emit('aGong', {});
+	function aGong(what) {
+		socket.emit('aGong', {what});
 	}
 
 	socket.on('allOff', function (data) {

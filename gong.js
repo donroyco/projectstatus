@@ -5,13 +5,14 @@ var Gong = function () {
 
 // properties and methods
 Gong.prototype = {
-    play: function () {
-		var command = `aplay gong.wav`;
+    play: function (what) {
+			var command = `aplay ${what}.wav`;
+			console.log('playing ', command);
 
-		var exec = require('child_process').execSync;
-		try {
-			exec(command, function(error, stdout, stderr) {});
-		} catch (e) {
+			var exec = require('child_process').execSync;
+			try {
+				exec(command, function(error, stdout, stderr) {});
+			} catch (e) {
 
 		}
     }
