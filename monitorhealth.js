@@ -1,5 +1,4 @@
 // Config
-
 var socketPort = 8081;
 
 var tickTimeSeconds = 30;
@@ -17,17 +16,19 @@ server.listen(socketPort);
 app.use(express.static('public'));		
 
 // Configuration
+var defaultConfig = 'projectstatus-config.json';
+if (process.argv.length === 1) {
+	defaultConfig = process.argv[0] + '.json';
+};
 var nconf = require('nconf');
 nconf.argv()
    .env()
-   .file({ file: 'projectstatus-config.json' })
+   .file({ file: defaultConfig })
    .load();
 
 var projectName = nconf.get('projectname');
 
-
 io.sockets.emit('heading1', 'Health status for {projectName}');
-
 
 var display = require('./display');
 display.init(nconf.get('config'));
