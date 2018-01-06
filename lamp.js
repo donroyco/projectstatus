@@ -1,10 +1,13 @@
+var color = process.argv[2];
 var blinkstick = require('blinkstick');
-
 var device = blinkstick.findFirst();
 
-device.blink('random', function(){
-    device.pulse('random', function(){
-        device.setColor('red', function(){
-        });
+device.setMode(0);
+
+device.setColor(color, function(){
+    console.log(color, 'on');
+    device.getColorString(function(error, result) {
+        if (error) {console.log(error)}
+        console.log("Color:        " + result);
     });
 });
