@@ -8,4 +8,5 @@ say.stop()
 
 // More complex example (with an OS X voice) and slow speed
 // say.speak("What's up, dog?", 'Alex')
-say.speak("What's up, dog?", 'Fiona')
+say.speak("My name is bluey", 'Samantha');
+
