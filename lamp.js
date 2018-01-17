@@ -2,7 +2,7 @@ var color = process.argv[2];
 var blinkstick = require('blinkstick');
 var device = blinkstick.findFirst();
 
-device.setMode(0);
+device.setMode(1);
 
 device.setColor(color, function(){
     console.log(color, 'on');
