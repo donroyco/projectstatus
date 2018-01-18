@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+	<title>ProjectHealth</title>
+	
+	<script src="socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="bootstrap-responsive.css">
+
+  </head>
+  <body class="beamer">
+		<h1 id="bambooInfo" style="color: red">...</h1>
+
+<script type="text/javascript">
+	var socket = io.connect();
+	socket.emit('updateNow', {});
+	socket.on('lightBamboo', function (data) {
+		// document.getElementById("bambooStatusIndicator").className = data.value;
+		console.log(data);
+		document.getElementById("bambooInfo").innerHTML = data.info;
+	});
+	
+</script>
+</body>
+</html>

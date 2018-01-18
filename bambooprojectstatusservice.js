@@ -7,6 +7,7 @@ let cheerio = require('cheerio')
 var BambooStatus = function (config) {
     this.bambookey = config.bambookey;
 }
+var lastBuildPlan = '...';
 
 // properties and methods
 BambooStatus.prototype = {
@@ -23,12 +24,18 @@ BambooStatus.prototype = {
             var isFailed = $('.result ').hasClass('Failed');
 
         	if (isBuilding) {
-                defer.resolve({'value': 'building', 'info': 'building', 'reason': 'komt nog'});
+                var buildingJobs = $('.indicator.building');
+                var planBuilding = buildingJobs.parent().parent().find('a.plan-name').text();
+                console.log(buildingJobs.parent().parent().find('a.plan-name'));
+                lastBuildPlan = planBuilding;
+                defer.resolve({'value': 'building', 'info': planBuilding, 'reason': 'komt nog'});
         	} else if (isFailed) {
                 var reasonFailure = 'failed';
                 var failureInfo = 'unknown error';
                 
                 var failedBuilds = $('.result.Failed');
+                var planFailing = failedBuilds.find('.plan-name').text();
+                console.log(planFailing);
                 if (failedBuilds.length === 1) {
                     if (failedBuilds.find('a').attr('href').indexOf('BW-BWAPINIG') > -1 ||
                         failedBuilds.find('a').attr('href').indexOf('BW-AE2ENIG') > -1) {
@@ -37,9 +44,9 @@ BambooStatus.prototype = {
                     }
                 }
 
-                defer.resolve({'value': reasonFailure, 'info': failureInfo, 'reason': 'unkown'});
+                defer.resolve({'value': reasonFailure, 'info': planFailing, 'reason': 'build failed'});
         	} else {
-                defer.resolve({'value': 'successful', 'info': 'Last run OK', 'reason': 'unkown'});
+                defer.resolve({'value': 'successful', 'info': 'Last run OK ' + lastBuildPlan, 'reason': 'unkown'});
         	}
         })
         .catch(function (err) {

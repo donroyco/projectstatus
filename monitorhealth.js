@@ -112,7 +112,7 @@ function processBambooStatus(bambooStatus) {
 	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'failed') {
 		display.buzz();
 		// Speak about buildbreaker and stroepiewaffels here
-		console.log('stroepiewaffels by ', bambooStatus.reason);
+		console.log('stroepiewaffels by ', bambooStatus.info);
 	}
 	lastBambooStatus = bambooStatus.value;
 	display.setBambooStatus(bambooStatus.value);
