@@ -1,6 +1,6 @@
 {"projectname": "BW-DEF", 
 	"config": {
-		 "lampBambooConfig": {"portRed": 1, "portGreen": 2, "portBlue": 3},
+		 "lampBambooConfig": {"portRed": 1, "portGreen": 3, "portBlue": 2},
 		 "lampHealthConfig": {"portRed": 4, "portGreen": 6, "portBlue": 5},
 		 "buzzerPort": 7,
 		 "healthURL" : "https://www.ute1.klm.com/ams/aviato/gql?query=query%20%7B%20content%20%7BdangerousGoods%20%7Btitle%20description%7D%7D%7D",
