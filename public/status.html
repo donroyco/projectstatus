@@ -8,16 +8,26 @@
 	<link rel="stylesheet" href="bootstrap-responsive.css">
 
   </head>
-  <body class="beamer">
-		<h1 id="bambooInfo" style="color: red">...</h1>
+  <body class="status">
+		<h1 id="bambooInfo" class="verybig">...</h1>
 
 <script type="text/javascript">
 	var socket = io.connect();
 	socket.emit('updateNow', {});
 	socket.on('lightBamboo', function (data) {
 		// document.getElementById("bambooStatusIndicator").className = data.value;
-		console.log(data);
-		document.getElementById("bambooInfo").innerHTML = data.info;
+		// console.log(data);
+		if (data.value === 'failed') {
+			document.getElementById("bambooInfo").innerHTML = data.info;
+			document.getElementById("bambooInfo").style = "color:red;";
+		} else if (data.value === 'building') {
+			document.getElementById("bambooInfo").innerHTML = data.info;
+			document.getElementById("bambooInfo").style = "color:#00a1de;";
+		} else {
+			document.getElementById("bambooInfo").innerHTML = "";
+		}
+
+
 	});
 	
 </script>
