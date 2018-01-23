@@ -119,6 +119,7 @@ function processBambooStatus(bambooStatus) {
 	display.setBambooStatus(bambooStatus.value);
 
 	io.sockets.emit('lightBamboo', bambooStatus);	
+	io.sockets.emit('buildstatus', bambooStatus.planstatus);	
 }
 
 function processHealthStatus(healthStatus) {

@@ -22,8 +22,31 @@ BambooStatus.prototype = {
             var isBuilding =  $('.build-details .indicator').hasClass('building');
             var isFailed = $('.result ').hasClass('Failed');
 
+            var planNames = {};
+            $('.result.Successful').each(function(i, plan){    
+                var planName = $(this).find('a').text();
+                var planCode = $(this).find('a').attr('href').replace('/browse/', '');
+                var isBuilding =  $(this).find('.build-details .indicator').hasClass('building');
+                if (isBuilding) {
+                    planNames[planCode] = {"planName": planName,
+                                           "status": "building"};  
+                }
+            });
+
+            $('.result.Failed').each(function(i, plan){  
+                var planName = $(this).find('a').text();
+                var planCode = $(this).find('a').attr('href').replace('/browse/', '');
+                if (['BW-BWAPINIG', 'BW-AE2ENIG'].indexOf(planCode) === -1) {
+                }
+                planNames[planCode] = {"planName": planName,
+                                       "status": "failed"};  
+            });
+
+            console.log(planNames);
         	if (isBuilding) {
-                defer.resolve({'value': 'building', 'info': 'building', 'reason': 'komt nog'});
+                var plansBuilding = $('.result.Successful');
+                var planNameBuilding = plansBuilding.find('a').attr('href')
+                defer.resolve({'value': 'building', 'info': 'building', 'planstatus': planNames});
         	} else if (isFailed) {
                 var reasonFailure = 'failed';
                 var failureInfo = 'unknown error';
@@ -37,9 +60,9 @@ BambooStatus.prototype = {
                     }
                 }
 
-                defer.resolve({'value': reasonFailure, 'info': failureInfo, 'reason': 'unkown'});
+                defer.resolve({'value': reasonFailure, 'info': failureInfo, 'reason': 'unkown', 'planstatus': planNames});
         	} else {
-                defer.resolve({'value': 'successful', 'info': 'Last run OK', 'reason': 'unkown'});
+                defer.resolve({'value': 'successful', 'info': 'Last run OK', 'reason': 'unkown', 'planstatus': planNames});
         	}
         })
         .catch(function (err) {

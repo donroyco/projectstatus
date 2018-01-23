@@ -13,6 +13,14 @@ body.beamer {
     padding: 0;
 }
 
+body.status {
+	margin: 5px;
+	background: #000;
+	font-family: arial;
+    color: #F00;
+    padding: 0;
+}
+
 li { 
 	list-style-type:none; 
 } 
