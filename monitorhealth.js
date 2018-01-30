@@ -16,9 +16,9 @@ server.listen(socketPort);
 app.use(express.static('public'));		
 
 // Configuration
-var defaultConfig = 'projectstatus-config.json';
+var defaultConfig = './config/projectstatus-config.json';
 if (process.argv.length === 1) {
-	defaultConfig = process.argv[0] + '.json';
+	defaultConfig = './config/' + process.argv[0] + '.json';
 };
 var nconf = require('nconf');
 nconf.argv()
