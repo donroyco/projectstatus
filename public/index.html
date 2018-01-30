@@ -41,13 +41,21 @@
 <button onclick="quitAll();">Quit process</button> -->
 <button onclick="allDisco();">Dont press</button>
 <button onclick="aBuzz();">Attention</button><br>
-<button onclick="aGong('gong');">Standup</button>
-<button onclick="aGong('cantpublish');">Cant Publish</button>
-<button onclick="aGong('Chewie3');">Roar</button>
-<button onclick="aGong('helpme');">Helpme</button>
-<button onclick="aGong('order66');">Execute</button>
+<form action="">
+	<input type="radio" name="wav" checked="checked" value="gong"> Standup<br>
+	<input type="radio" name="wav" value="cantpublish"> Cant Publish<br>
+	<input type="radio" name="wav" value="Chewie3"> Roar <br>
+	<input type="radio" name="wav" value="helpme"> Helpme <br>
+	<input type="radio" name="wav" value="order66"> Execute <br>
+	<button onclick="aWav();">Ring it</button>
+</form>
+
 <div id="generalInfo" class="infoline">...</div>
 <br>
+
+<h1 id="building" style="color:#006EFF;font-size: 20px">...</h1>
+<h1 id="failed" style="color:red;font-size: 20px">...</h1>
+
 
 <script type="text/javascript">
 	var socket = io.connect();
@@ -112,10 +120,12 @@
 	}
 
 	function aBuzz() {
-		socket.emit('aBuzz', {});
+		socket.emit('aBuzz' );
 	}
 
-	function aGong(what) {
+	function aWav() {
+		var what = document.querySelector('input[name="wav"]:checked').value;
+		event.preventDefault();
 		socket.emit('aGong', {what});
 	}
 
@@ -123,6 +133,22 @@
 		document.getElementById("bambooStatusIndicator").className = '';
 		document.getElementById("healthStatusIndicator").className = '';
 	});
+
+	socket.on('buildstatus', function (data) {
+		var plansFailed = '', plansBuilding = '';
+		Object.keys(data).forEach(key => {
+			if (data[key].status === 'failed') {
+				plansFailed = plansFailed + data[key].planName + "<br>";
+			}
+			if (data[key].status === 'building') {
+				plansBuilding = plansBuilding + data[key].planName + "<br>";
+			}
+		});
+		document.getElementById("building").innerHTML = plansBuilding;
+		document.getElementById("failed").innerHTML = plansFailed;
+
+	});
+
 
 </script>
 </body>

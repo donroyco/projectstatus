@@ -18,7 +18,10 @@ body.status {
 	background: #000;
 	font-family: arial;
     color: #F00;
-    padding: 0;
+	padding: 0;
+}
+body.status h1{
+	line-height: 55px;
 }
 
 li { 

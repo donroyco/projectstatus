@@ -30,15 +30,15 @@ var projectName = nconf.get('projectname');
 
 io.sockets.emit('heading1', 'Health status for {projectName}');
 
-var display = require('./display');
+var display = require('./src/display');
 display.init(nconf.get('config'));
 
 display.allOff();
 
-var Speaker = require('./speaker');
+var Speaker = require('./src/speaker');
 var speaker = new Speaker(nconf.get('config'));
 
-var Gong = require('./gong');
+var Gong = require('./src/gong');
 var gong = new Gong();
 
 var isAllOff = false;
@@ -47,11 +47,11 @@ var overruleOfficeHours = false;
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
-var BambooStatus = require('./bambooprojectstatusservice');
+var BambooStatus = require('./src/bambooprojectstatusservice');
 var bambooStatusService = new BambooStatus(nconf.get('config'));
 //var BambooStatus = require('./bamboostatusservice');
 //var bambooStatusService = new BambooStatus(nconf.get('projectname'));
-var HealthStatus = require('./healthstatusservice');
+var HealthStatus = require('./src/healthstatusservice');
 var healthStatusService = new HealthStatus(nconf.get('config'));
 
 // Process ticks...

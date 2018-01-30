@@ -9,7 +9,7 @@
 
   </head>
   <body class="status">
-		<h1 id="building" style="color:blue;font-size: 60px">...</h1>
+		<h1 id="building" style="color:#006EFF;font-size: 60px">...</h1>
 		<h1 id="failed" style="color:red;font-size: 60px">...</h1>
 
 <script type="text/javascript">
@@ -19,10 +19,10 @@
 		var plansFailed = '', plansBuilding = '';
 		Object.keys(data).forEach(key => {
 			if (data[key].status === 'failed') {
-				plansFailed = plansFailed + data[key].planName + "\n";
+				plansFailed = plansFailed + data[key].planName + "<br>";
 			}
 			if (data[key].status === 'building') {
-				plansBuilding = plansBuilding + data[key].planName + "\n";
+				plansBuilding = plansBuilding + data[key].planName + "<br>";
 			}
 		});
 		document.getElementById("building").innerHTML = plansBuilding;
