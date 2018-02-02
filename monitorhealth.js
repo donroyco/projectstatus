@@ -17,8 +17,8 @@ app.use(express.static('public'));
 
 // Configuration
 var defaultConfig = './config/projectstatus-config.json';
-if (process.argv.length === 1) {
-	defaultConfig = './config/' + process.argv[0] + '.json';
+if (process.argv.length === 3) {
+	defaultConfig = './config/' + process.argv[2] + '.json';
 };
 var nconf = require('nconf');
 nconf.argv()
@@ -26,33 +26,35 @@ nconf.argv()
    .file({ file: defaultConfig })
    .load();
 
-var projectName = nconf.get('projectname');
+var config = nconf.get('config');
+var projectName =config.projectname;
 
 io.sockets.emit('heading1', 'Health status for {projectName}');
 
 var display = require('./src/display');
-display.init(nconf.get('config'));
+display.init(config);
 
 display.allOff();
 
 var Speaker = require('./src/speaker');
-var speaker = new Speaker(nconf.get('config'));
+var speaker = new Speaker(config);
 
 var Gong = require('./src/gong');
 var gong = new Gong();
 
 var isAllOff = false;
-var overruleOfficeHours = false;
+var overruleOfficeHours = config.overruleOfficeHours || false;
+console.log('late', overruleOfficeHours, config);
 
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
 var BambooStatus = require('./src/bambooprojectstatusservice');
-var bambooStatusService = new BambooStatus(nconf.get('config'));
+var bambooStatusService = new BambooStatus(config);
 //var BambooStatus = require('./bamboostatusservice');
 //var bambooStatusService = new BambooStatus(nconf.get('projectname'));
 var HealthStatus = require('./src/healthstatusservice');
-var healthStatusService = new HealthStatus(nconf.get('config'));
+var healthStatusService = new HealthStatus(config);
 
 // Process ticks...
 var ticker = setInterval(function() {

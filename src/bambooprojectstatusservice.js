@@ -3,30 +3,34 @@
 var requestP = require('request-promise');
 var q = require('q');
 let cheerio = require('cheerio')
+let plansToIgnore = ['BW-BWAPINIG', 'BW-AE2ENIG'];
  
 var BambooStatus = function (config) {
     this.bambookey = config.bambookey;
+    this.bambooURL = config.bambooURL;
 }
 
 // properties and methods
 BambooStatus.prototype = {
     getBambooStatus: function () {
         var defer = q.defer();
-        var bambookey = this.bambookey;
 
         var lastStatus = 'unknown';
         // see if building
-        requestP(uriWithOptionForJason(`https://bamboo.devnet.klm.com/telemetry.action?filter=project&projectKey=${bambookey}`))
+        console.log('biddie', this.bambooURL);
+        requestP(uriWithOptionForJason(`${this.bambooURL}${this.bambookey}`))
         .then(function (html) {
             var $ = cheerio.load(html);
             var isBuilding =  false;
             var isFailed = false;
-
+            
             var planNames = {};
             $('.result.Successful').each(function(i, plan){    
                 var planName = $(this).find('a').text();
                 var planCode = $(this).find('a').attr('href').replace('/browse/', '');
-                if ($(this).find('.build-details .indicator.building').length > 0) {
+                var isBuilding =  $(this).find('.build-details .indicator').hasClass('building');
+                console.log(planName, isBuilding);
+                if (isBuilding) {
                     planNames[planCode] = {"planName": planName,
                                            "status": "building"};  
                     isBuilding = true;
@@ -36,7 +40,7 @@ BambooStatus.prototype = {
             $('.result.Failed').each(function(i, plan){  
                 var planName = $(this).find('a').text();
                 var planCode = $(this).find('a').attr('href').replace('/browse/', '');
-                if (['BW-BWAPINIG', 'BW-AE2ENIG'].indexOf(planCode) === -1) {
+                if (plansToIgnore.indexOf(planCode) === -1) {
                     // Not say failed if building
                     if (planNames[planCode] === undefined) {
                         planNames[planCode] = {"planName": planName,
@@ -45,9 +49,11 @@ BambooStatus.prototype = {
                     }
                  }
             });
+
         	if (isBuilding) {
                 var plansBuilding = $('.result.Successful');
                 var planNameBuilding = plansBuilding.find('a').attr('href')
+                console.log('think im building');
                 defer.resolve({'value': 'building', 'info': 'building', 'planstatus': planNames});
         	} else if (isFailed) {
                 var reasonFailure = 'failed';

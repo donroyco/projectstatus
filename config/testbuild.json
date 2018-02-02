@@ -6,8 +6,9 @@
 		 "healthURL" : "https://wwws-ute3.klm.nl/gql/gql-check-in?query=query%20%7B%20content%20%7BdangerousGoods%20%7Btitle%20description%7D%7D%7D",
 		 "hostMonitorURL" : "http://hostmonitor.klm.com/index.htm",
 		 "bambookey" : "BW",
-		 "bambooURL" : "https://bamboo.devnet.klm.com/telemetry.action?filter=project&projectKey=",
+		 "bambooURL" : "http://localhost:8081/mock/bambooOneBuilding.html?a=",
 		 "timeout" : 7000, 
+		 "overruleOfficeHours": true,
 		 "voice": "rms" 
  	}
  }
