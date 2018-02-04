@@ -21,15 +21,21 @@ StatusBuzzer.prototype = {
 
 };
 
+var errorRelay = false;
+
 function setBuzz(port, state) {
     // Do the exec
     var command = `crelay ${port} ${state}`;
+
+    if (errorRelay) {
+        return;
+    }
 
     var exec = require('child_process').execSync;
     try {
         exec(command, function(error, stdout, stderr) {});
     } catch (e) {
-
+        errorRelay = true;
     }
 
 }

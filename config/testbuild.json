@@ -7,6 +7,8 @@
 		 "hostMonitorURL" : "http://hostmonitor.klm.com/index.htm",
 		 "bambookey" : "BW",
 		 "bambooURL" : "http://localhost:8081/mock/bambooOneBuilding.html?a=",
+		 "bambooMostImportantPlan": "BW_AVSH",
+		 "bambooDeviceNumber": 0,
 		 "timeout" : 7000, 
 		 "overruleOfficeHours": true,
 		 "voice": "rms" 

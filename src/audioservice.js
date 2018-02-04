@@ -1,11 +1,11 @@
 "use strict";
 var fs = require('fs');
 
-var Gong = function () {
+var AudioService = function () {
   }
 
 // properties and methods
-Gong.prototype = {
+AudioService.prototype = {
     play: function (what) {
 			var extention = 'mp3';
 			if (fs.existsSync(`./sounds/${what}.wav`)) {
@@ -13,15 +13,21 @@ Gong.prototype = {
 			}
 
 			var command = `aplay ./sounds/${what}.${extention}`;
+
+			if (errorCommand) {
+				return;
+			}
 			console.log('playing ', command);
 
 			var exec = require('child_process').execSync;
 			try {
 				exec(command, function(error, stdout, stderr) {});
 			} catch (e) {
+		  	errorCommand = true;
+		 }
 
-		}
-    }
+		var errorCommand = false;
+	}
 };
 
-module.exports = Gong;
+module.exports = AudioService;

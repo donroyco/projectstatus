@@ -5,6 +5,7 @@ var StatusLamp = function (config) {
     this.lampGreenPort = config.portGreen;
     this.lampBluePort = config.portBlue;
     this.currentColor = 'initial';
+    this.errorRelay = false;
   }
 
 // properties and methods
@@ -57,15 +58,21 @@ StatusLamp.prototype = {
             }
     	}
 
+        var errorRelay = false;
+
         function setColor(lampPort, state) {
             // Do the exec
             var command = `crelay ${lampPort} ${state}`;
+
+            if (errorRelay) {
+                return;
+            }
 
             var exec = require('child_process').execSync;
             try {
                 exec(command, function(error, stdout, stderr) {});
             } catch (e) {
-
+                errorRelay = true;
             }
         }
     }

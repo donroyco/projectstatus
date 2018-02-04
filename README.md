@@ -19,3 +19,8 @@ echo "SUBSYSTEM==\"usb\", ATTR{idVendor}==\"20a0\", ATTR{idProduct}==\"41e5\", M
 sudo apt-get install flite is required for speech on RPI3
 
 
+Now on functionality:
+2 statuslights.
+1. on Bamboo planboard to monitor the build
+2. on hostMonitor or on any backend, to see if measury and oauth are up.
+

@@ -8,6 +8,7 @@ let plansToIgnore = ['BW-BWAPINIG', 'BW-AE2ENIG'];
 var BambooStatus = function (config) {
     this.bambookey = config.bambookey;
     this.bambooURL = config.bambooURL;
+    this.bambooMostImportantPlan = config.bambooMostImportantPlan;
 }
 
 // properties and methods
@@ -17,12 +18,12 @@ BambooStatus.prototype = {
 
         var lastStatus = 'unknown';
         // see if building
-        console.log('biddie', this.bambooURL);
         requestP(uriWithOptionForJason(`${this.bambooURL}${this.bambookey}`))
         .then(function (html) {
             var $ = cheerio.load(html);
             var isBuilding =  false;
             var isFailed = false;
+            var isMostImportantPlanFailed = false;
             
             var planNames = {};
             $('.result.Successful').each(function(i, plan){    
@@ -41,62 +42,44 @@ BambooStatus.prototype = {
                 var planName = $(this).find('a').text();
                 var planCode = $(this).find('a').attr('href').replace('/browse/', '');
                 if (plansToIgnore.indexOf(planCode) === -1) {
-                    // Not say failed if building
+                    // Not say failed if it is currently building
                     if (planNames[planCode] === undefined) {
                         planNames[planCode] = {"planName": planName,
                         "status": "failed"}; 
+                        if (planCode === this.bambooMostImportantPlan) {
+                            isMostImportantPlanFailed = true;
+                        }
                         isFailed = true;
                     }
                  }
             });
-
+console.log(planNames, isBuilding, isFailed, isMostImportantPlanFailed);
         	if (isBuilding) {
-                var plansBuilding = $('.result.Successful');
-                var planNameBuilding = plansBuilding.find('a').attr('href')
-                console.log('think im building');
-                defer.resolve({'value': 'building', 'info': 'building', 'planstatus': planNames});
+                defer.resolve({'status': 'building', 'planstatus': planNames});
         	} else if (isFailed) {
-                var reasonFailure = 'failed';
-                var failureInfo = 'unknown error';
-                
-                var failedBuilds = $('.result.Failed');
-                if (failedBuilds.length === 1) {
-                    if (failedBuilds.find('a').attr('href').indexOf('BW-BWAPINIG') > -1 ||
-                        failedBuilds.find('a').attr('href').indexOf('BW-AE2ENIG') > -1) {
-                        reasonFailure = 'nightly';         
-                        failureInfo = 'Load test Failed';
-                    }
+                if (isMostImportantPlanFailed) {
+                    defer.resolve({'status': 'failedMIP', 'planstatus': planNames});
+                } else {
+                    console.log('before defer');
+                    defer.resolve({'status': 'failed', 'planstatus': planNames});
                 }
-
-                defer.resolve({'value': reasonFailure, 'info': failureInfo, 'reason': 'unkown', 'planstatus': planNames});
         	} else {
-                defer.resolve({'value': 'successful', 'info': 'Last run OK', 'reason': 'unkown', 'planstatus': planNames});
+                defer.resolve({'status': 'successful', 'planstatus': {}});
         	}
         })
         .catch(function (err) {
             // parsing failed 
             console.log('error index: ', err);
-            defer.resolve({'value': 'error', 'info': err.message, 'reason': 'unkown'});
+            defer.resolve({'status': 'error', 'info': err.message, 'planstatus': {}});
         });
 
         return defer.promise;
     }
 }
 
-function blameName(buildReason) {
-    var posBefore = buildReason.indexOf('>') + 1;
-    var posAfter = buildReason.indexOf(',');
-    var name2blame = buildReason.substr(posBefore, posAfter - posBefore);
-    console.log(buildReason, posBefore , posAfter, name2blame);
-    return name2blame;
-}
-
 function uriWithOptionForJason(uri) {
     return  {
         uri: uri,
-        // qs: {
-        //     access_token: 'xxxxx xxxxx' // -> uri + '?access_token=xxxxx%20xxxxx' 
-        // },
         headers: {
             'User-Agent': 'Request-Promise'
         },
@@ -105,8 +88,3 @@ function uriWithOptionForJason(uri) {
 }
 
 module.exports = BambooStatus;
-
-// function getAverageBuildTime(projectName) {
-// 	// Do this later, get rest details for evey result, count successfull and average buildtimes
-// 	// Only do this when starting the process.
-// }

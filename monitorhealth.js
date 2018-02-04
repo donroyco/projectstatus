@@ -39,12 +39,11 @@ display.allOff();
 var Speaker = require('./src/speaker');
 var speaker = new Speaker(config);
 
-var Gong = require('./src/gong');
-var gong = new Gong();
+var AudioService = require('./src/audioservice');
+var audioService = new AudioService();
 
 var isAllOff = false;
 var overruleOfficeHours = config.overruleOfficeHours || false;
-console.log('late', overruleOfficeHours, config);
 
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
@@ -66,7 +65,7 @@ var ticker = setInterval(function() {
 function update() {
 
 	io.sockets.emit('generalInfo', 'Checking Project Status');	
-	io.sockets.emit('heading1', 'Health status for ' + nconf.get('projectname'));
+	io.sockets.emit('heading1', 'Health status for ' + projectName);
 	
 	if (inOfficeHours()) {
 		if (isAllOff) {
@@ -110,18 +109,17 @@ function inOfficeHours() {
 	return isTimeOK && !isWeekend;
 }
 
-function processBambooStatus(bambooStatus) {
-
-	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'failed') {
+function processBambooStatus(bamboo) {
+	console.log(bamboo);
+	if (lastBambooStatus !== bamboo.status && bamboo.status.indexOf('failed') !== -1) {
+		console.log('buzzing');
 		display.buzz();
-		// Speak about buildbreaker and stroepiewaffels here
-		console.log('stroepiewaffels by ', bambooStatus.reason);
 	}
-	lastBambooStatus = bambooStatus.value;
-	display.setBambooStatus(bambooStatus.value);
+	lastBambooStatus = bamboo.status;
+	display.setBambooStatus(bamboo.status);
 
-	io.sockets.emit('lightBamboo', bambooStatus);	
-	io.sockets.emit('buildstatus', bambooStatus.planstatus);	
+	io.sockets.emit('lightBamboo', bamboo);	
+	io.sockets.emit('buildstatus', bamboo.planstatus);	
 }
 
 function processHealthStatus(healthStatus) {
@@ -157,8 +155,8 @@ io.sockets.on('connection', function (socket) {
 		display.buzz();
 	}); 
 
-	socket.on('aGong', function (data) {
-		gong.play(data.what);
+	socket.on('audioRequest', function (data) {
+		audioService.play(data.what);
 	}); 
 
 	socket.on('sayText', function (data) {

@@ -1,9 +1,9 @@
 'use strict';
 
 let Lamps = require('./statusLamp');
+let LightSabers = require('./lightsaber');
 let Buzzer = require('./statusBuzzer');
 var q = require('q');
-
 
 var lampBamboo, lampHealth, buzzer;
 
@@ -20,26 +20,26 @@ module.exports = {
 };
 
 function init(config) {
-	lampBamboo = new Lamps(config.lampBambooConfig);
+	lampBamboo = new LightSabers(config.bambooDeviceNumber);
 	lampHealth = new Lamps(config.lampHealthConfig);
 	buzzer = new Buzzer(config.buzzerPort);
 }
 
 function setBambooStatus(status) {
 	if (status === 'successful') {
-		lampBamboo.set('green');
+		lampBamboo.set('#00DD00');
 	}
 	if (status === 'building') {
-		lampBamboo.set('blue');
+		lampBamboo.set('#00A1DE');
 	}
 	if (status === 'failed') {
-		lampBamboo.set('red');
+		lampBamboo.set('#EE3377');
 	}
-	if (status === 'nightly') {
-		lampBamboo.set('yellow');
+	if (status === 'failedMIP') {
+		lampBamboo.set('#FF0000');
 	}
 	if (status === 'error') {
-		lampBamboo.set('purple');
+		lampBamboo.set('#DD00DD');
 	}
 }
 

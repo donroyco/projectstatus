@@ -123,13 +123,13 @@
 	}
 
 	function aBuzz() {
-		socket.emit('aBuzz' );
+		socket.emit('audioRequest', 'beep');
 	}
 
 	function aWav() {
 		var what = document.querySelector('input[name="wav"]:checked').value;
 		event.preventDefault();
-		socket.emit('aGong', {what});
+		socket.emit('audioRequest', {what});
 	}
 
 	socket.on('allOff', function (data) {

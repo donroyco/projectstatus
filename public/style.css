@@ -79,18 +79,18 @@ input {
 }
 #bambooStatusIndicator.successful,
 #healthStatusIndicator.up {
-	background: url(StatusGreen.png);
+	background: url(images/StatusGreen.png);
 	background-size: 99%;
 	background-repeat: no-repeat;
 }
 #bambooStatusIndicator.building {
-	background: url(StatusBlue.png);
+	background: url(images/StatusBlue.png);
 	background-size: 99%;
 	background-repeat: no-repeat;
 }
 #bambooStatusIndicator.error,
 #healthStatusIndicator.error {
-	background: url(StatusPurple.png);
+	background: url(images/StatusPurple.png);
 	background-size: 99%;
 	background-repeat: no-repeat;
 }
@@ -100,14 +100,14 @@ input {
 }
 #bambooStatusIndicator.failed, 
 #healthStatusIndicator.down {
-	background: url(StatusRed.png);
+	background: url(images/StatusRed.png);
 	background-size: 99%;
 	background-repeat: no-repeat;
 }
 
 #bambooStatusIndicator.disco, 
 #healthStatusIndicator.disco {
-	background: url(statusdisco.gif);
+	background: url(images/statusdisco.gif);
 	background-size: 99%;
 	background-repeat: no-repeat;
 }
