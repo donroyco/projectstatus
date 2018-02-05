@@ -50,6 +50,7 @@
 	<input type="radio" name="wav" value="superpadoem"> Phil <br>
 	<input type="radio" name="wav" value="horn"> Horn <br>
 	<input type="radio" name="wav" value="order66"> Execute <br>
+	<input type="radio" name="wav" value="swcantina"> Execute <br>
 	<button onclick="aWav();">Ring it</button>
 </form>
 
@@ -117,6 +118,7 @@
 	}
 
 	function allDisco() {
+		socket.emit('audioRequest', 'swcantina');
 		socket.emit('allDisco', {});
 		document.getElementById("bambooStatusIndicator").className = 'disco';
 		document.getElementById("healthStatusIndicator").className = 'disco';
