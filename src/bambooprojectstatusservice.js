@@ -29,9 +29,8 @@ BambooStatus.prototype = {
             $('.result.Successful').each(function(i, plan){    
                 var planName = $(this).find('a').text();
                 var planCode = $(this).find('a').attr('href').replace('/browse/', '');
-                var isBuilding =  $(this).find('.build-details .indicator').hasClass('building');
                 console.log(planName, isBuilding);
-                if (isBuilding) {
+                if ($(this).find('.build-details .indicator').hasClass('building')) {
                     planNames[planCode] = {"planName": planName,
                                            "status": "building"};  
                     isBuilding = true;

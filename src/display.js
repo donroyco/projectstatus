@@ -33,7 +33,7 @@ function setBambooStatus(status) {
 		lampBamboo.set('#00A1DE');
 	}
 	if (status === 'failed') {
-		lampBamboo.set('#EE3377');
+		lampBamboo.set('#DD0123');
 	}
 	if (status === 'failedMIP') {
 		lampBamboo.set('#FF0000');
@@ -95,7 +95,7 @@ function allDisco() {
 }
 
 function blinkBambooRandom() {
-	lampBamboo.set(randomColor(lampBamboo.currentColor));
+	lampBamboo.set(randomColor(lampBamboo.currentColor), true);  // immediate
     return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 
