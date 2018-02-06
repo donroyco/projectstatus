@@ -31,26 +31,27 @@
 </div>
 <hr>
 <h3>For saying out loud</h3>
-<input type="text" placeholder="male voice" size="100" onkeydown="processSay(this, 'rms')"/> <br> 
-<input type="text" placeholder="female voice" size="100" onkeydown="processSay(this, 'slt')"/>  <br>
+<input type="text" placeholder="Male voice" size="100" onkeydown="processSay(this, 'rms')"/> <br> 
+<input type="text" placeholder="Female voice" size="100" onkeydown="processSay(this, 'slt')"/>  <br>
 <!-- <input type="text" placeholder="Sean" size="100" onkeydown="processSay(this, 'awb')"/>  <br> -->
 <br>
-<button onclick="updateNow();">Run now</button>
+<button onclick="updateNow();">Run Now</button>
 <!-- <button id="btnOverruleOfficeHours" onclick="overruleOfficeHours(true);">overrule OfficeHours</button>
 <button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
 <button onclick="quitAll();">Quit process</button> -->
-<button onclick="allDisco();">Dont press</button>
+<button onclick="allDisco();">Don't Press</button>
 <button onclick="aBuzz();">Attention</button><br>
 <form action="">
-	<input type="radio" name="wav" checked="checked" value="gong"> Standup<br>
-	<input type="radio" name="wav" value="cantpublish"> Cant Publish<br>
-	<input type="radio" name="wav" value="Chewie3"> Roar <br>
-	<input type="radio" name="wav" value="helpme"> Helpme <br>
-	<input type="radio" name="wav" value="badoempatts"> Joke <br>
-	<input type="radio" name="wav" value="superpadoem"> Phil <br>
-	<input type="radio" name="wav" value="horn"> Horn <br>
-	<input type="radio" name="wav" value="order66"> Execute <br>
-	<input type="radio" name="wav" value="cricket"> quiet <br>
+	<input type="radio" name="wav" checked="checked" value="gong" id="gong"><label for="gong">Standup</label><br>
+	<input type="radio" name="wav" value="cantpublish" id="cantpublish"><label for="cantpublish">Can't Publish</label><br>
+	<input type="radio" name="wav" value="chewie" id="chewie"><label for="chewie">Roar</label><br>
+	<input type="radio" name="wav" value="helpme" id="helpme"><label for="helpme">Help Me</label><br>
+	<input type="radio" name="wav" value="badoempatts" id="badoempatts"><label for="badoempatts">Joke</label><br>
+	<input type="radio" name="wav" value="superpadoem" id="superpadoem"><label for="superpadoem">Phil</label><br>
+	<input type="radio" name="wav" value="horn" id="horn"><label for="horn">Horn</label><br>
+	<input type="radio" name="wav" value="order66" id="order66"><label for="order66">Execute</label><br>
+	<input type="radio" name="wav" value="cricket" id="cricket"><label for="cricket">Quiet</label><br>
+	<input type="radio" name="wav" value="ateam" id="ateam"><label for="ateam">Need Help?</label><br>
 	<button onclick="aWav();">Ring it</button>
 </form>
 
