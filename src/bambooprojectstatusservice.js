@@ -26,10 +26,9 @@ BambooStatus.prototype = {
             var isMostImportantPlanFailed = false;
             
             var planNames = {};
-            $('.result.Successful').each(function(i, plan){    
+            $('.result').each(function(i, plan){    
                 var planName = $(this).find('a').text();
                 var planCode = $(this).find('a').attr('href').replace('/browse/', '');
-                console.log(planName, isBuilding);
                 if ($(this).find('.build-details .indicator').hasClass('building')) {
                     planNames[planCode] = {"planName": planName,
                                            "status": "building"};  
@@ -52,14 +51,13 @@ BambooStatus.prototype = {
                     }
                  }
             });
-console.log(planNames, isBuilding, isFailed, isMostImportantPlanFailed);
-        	if (isBuilding) {
+
+            if (isBuilding) {
                 defer.resolve({'status': 'building', 'planstatus': planNames});
         	} else if (isFailed) {
                 if (isMostImportantPlanFailed) {
                     defer.resolve({'status': 'failedMIP', 'planstatus': planNames});
                 } else {
-                    console.log('before defer');
                     defer.resolve({'status': 'failed', 'planstatus': planNames});
                 }
         	} else {

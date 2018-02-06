@@ -187,4 +187,12 @@ console.log("Healthcheck for project: ", nconf.get('projectname'));
 speaker.say('Hello, my name is Bluey');
 display.buzz();
 
+process.on('SIGINT', function() {
+	// on ctrl-c, switch all off
+	display.allOff();
+	console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
+	process.exit(0);
+  });
+
+
 update();
