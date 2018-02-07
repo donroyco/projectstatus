@@ -40,9 +40,9 @@
 <button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
 <button onclick="quitAll();">Quit process</button> -->
 <button onclick="allDisco();">Don't Press</button>
-<button onclick="aBuzz();">Attention</button><br>
 <form action="">
 	<input type="radio" name="wav" checked="checked" value="gong" id="gong"><label for="gong">Standup</label><br>
+	<input type="radio" name="wav" value="beep" id="beep"><label for="beep">Buzz</label><br>
 	<input type="radio" name="wav" value="cantpublish" id="cantpublish"><label for="cantpublish">Can't Publish</label><br>
 	<input type="radio" name="wav" value="chewie" id="chewie"><label for="chewie">Roar</label><br>
 	<input type="radio" name="wav" value="helpme" id="helpme"><label for="helpme">Help Me</label><br>
@@ -119,14 +119,10 @@
 	}
 
 	function allDisco() {
-		socket.emit('audioRequest', 'swcantina');
+		socket.emit('audioRequest', {'what': 'swcantina'});
 		socket.emit('allDisco', {});
 		document.getElementById("bambooStatusIndicator").className = 'disco';
 		document.getElementById("healthStatusIndicator").className = 'disco';
-	}
-
-	function aBuzz() {
-		socket.emit('audioRequest', 'beep');
 	}
 
 	function aWav() {

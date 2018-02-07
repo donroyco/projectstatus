@@ -6,9 +6,9 @@ let cheerio = require('cheerio')
 let plansToIgnore = ['BW-BWAPINIG', 'BW-AE2ENIG'];
  
 var BambooStatus = function (config) {
-    this.bambookey = config.bambookey;
-    this.bambooURL = config.bambooURL;
-    this.bambooMostImportantPlan = config.bambooMostImportantPlan;
+    this.bambookey = config.key;
+    this.bambooURL = config.url;
+    this.bambooMostImportantPlan = config.mostImportantPlan;
 }
 
 // properties and methods

@@ -49,11 +49,11 @@ var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
 var BambooStatus = require('./src/bambooprojectstatusservice');
-var bambooStatusService = new BambooStatus(config);
+var bambooStatusService = new BambooStatus(config.bamboo);
 //var BambooStatus = require('./bamboostatusservice');
 //var bambooStatusService = new BambooStatus(nconf.get('projectname'));
 var HealthStatus = require('./src/healthstatusservice');
-var healthStatusService = new HealthStatus(config);
+var healthStatusService = new HealthStatus(config.health);
 
 // Process ticks...
 var ticker = setInterval(function() {
@@ -112,7 +112,7 @@ function inOfficeHours() {
 function processBambooStatus(bamboo) {
 	console.log(bamboo);
 	if (lastBambooStatus !== bamboo.status && bamboo.status.indexOf('failed') !== -1) {
-		display.buzz();
+		audioService.play('beep');
 	}
 	lastBambooStatus = bamboo.status;
 	display.setBambooStatus(bamboo.status);
@@ -150,10 +150,6 @@ io.sockets.on('connection', function (socket) {
 		display.allDisco();
 	}); 
 
-	socket.on('aBuzz', function (data) {
-		display.buzz();
-	}); 
-
 	socket.on('audioRequest', function (data) {
 		audioService.play(data.what);
 	}); 
@@ -184,8 +180,8 @@ io.sockets.on('connection', function (socket) {
 });
 
 console.log("Healthcheck for project: ", nconf.get('projectname'));
-speaker.say('Hello, my name is Bluey');
-display.buzz();
+speaker.say('Bluey two point zero.');
+audioService.play('beep');
 
 process.on('SIGINT', function() {
 	// on ctrl-c, switch all off

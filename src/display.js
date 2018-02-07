@@ -1,11 +1,9 @@
 'use strict';
 
-let Lamps = require('./statusLamp');
 let LightSabers = require('./lightsaber');
-let Buzzer = require('./statusBuzzer');
 var q = require('q');
 
-var lampBamboo, lampHealth, buzzer;
+var lampBamboo, lampHealth;
 
 var defaultTick = 200;
 var shortTick = 250;
@@ -14,15 +12,13 @@ module.exports = {
 	init: init,
     setBambooStatus: setBambooStatus,
     setHealthStatus: setHealthStatus,
-    buzz: buzz,
     allOff: allOff, 
     allDisco: allDisco
 };
 
 function init(config) {
-	lampBamboo = new LightSabers(config.bambooDeviceNumber);
-	lampHealth = new Lamps(config.lampHealthConfig);
-	buzzer = new Buzzer(config.buzzerPort);
+	lampBamboo = new LightSabers(config.bamboo.lampDeviceNumber);
+	lampHealth = new LightSabers(config.health.lampDeviceNumber);
 }
 
 function setBambooStatus(status) {
@@ -45,26 +41,22 @@ function setBambooStatus(status) {
 
 function setHealthStatus(status) {
 	if (status === 'up') {
-		lampHealth.set('green');
+		lampHealth.set('#00EE00');
 	}
 	if (status === 'shaky') {
 		lampHealth.set('yellow');
 	}
 	if (status === 'down') {
-		lampHealth.set('red');
+		lampHealth.set('#FF0000');
 	}
 	if (status === 'error') {
-		lampHealth.set('purple');
+		lampHealth.set('#DD00DD');
 	}
-}
-
-function buzz() {
-	buzzer.buzz(defaultTick);
 }
 
 function allOff() {
-	lampBamboo.set('off');
-	lampHealth.set('off')
+	lampBamboo.set('#000000', true);
+	lampHealth.set('#000000', true)
 }
 
 function allDisco() {
@@ -89,8 +81,8 @@ function allDisco() {
 				.then(blinkBambooRandom)
 				.then(blinkServerRandom)
 				.then(() => {
-					lampBamboo.set(lastBambooColor || 'off')
-					lampHealth.set(lastHealthColor || 'off')
+					lampBamboo.set(lastBambooColor || '#000000')
+					lampHealth.set(lastHealthColor || '#000000')
 					});
 }
 

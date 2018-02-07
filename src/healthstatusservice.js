@@ -4,7 +4,7 @@ var requestP = require('request-promise');
 var q = require('q');
 
 var HealthStatus = function (config) {
-    this.healthURL = config.healthURL;
+    this.healthURL = config.url;
     this.timeout = config.timeout;
 }
 // properties and methods

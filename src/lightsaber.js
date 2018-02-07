@@ -19,7 +19,7 @@ var LightSaber = function (deviceNumber) {
               setMode (mode) {}
             };
     }
-    this.device.setMode(1);
+    // this.device.setMode(1);
   }
 
 // properties and methods
