@@ -7,12 +7,12 @@ var AudioService = function () {
 // properties and methods
 AudioService.prototype = {
     play: function (what) {
-			var extention = 'mp3';
+			var extension = 'mp3';
 			if (fs.existsSync(`./sounds/${what}.wav`)) {
-				extention = 'wav';
+				extension = 'wav';
 			}
 
-			var command = `aplay ./sounds/${what}.${extention}`;
+			var command = `aplay ./sounds/${what}.${extension}`;
 
 			if (errorCommand) {
 				return;
