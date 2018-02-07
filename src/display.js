@@ -6,7 +6,7 @@ var q = require('q');
 var lampBamboo, lampHealth;
 
 var defaultTick = 200;
-var shortTick = 250;
+var shortTick = 300;
 
 module.exports = {
 	init: init,
@@ -92,13 +92,13 @@ function blinkBambooRandom() {
 }
 
 function blinkServerRandom() {
-	lampHealth.set(randomColor(lampHealth.currentColor));
+	lampHealth.set(randomColor(lampHealth.currentColor), true);
     return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 
 function randomColor(notBeingColor) {
 
-	var possibleColors = ['red','green','blue','yellow','purple','sea'];
+	var possibleColors = ['#FF0000','#00FF00','#0000FF','#FFFF00','#FF00FF','#00FFFF','#FFFFFF'];
 	var randomPos = Math.floor(Math.random() * possibleColors.length);
 	var discoColor = possibleColors[randomPos];
 	if (discoColor === notBeingColor) {
