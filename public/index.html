@@ -16,7 +16,7 @@
 			<H2>HEALTH <span id="healthStatusIndicator"></span></H2>
 			<!-- <button onclick="setHealthStatus('up');">Up & Running</button>
 			<button onclick="setHealthStatus('down');">Down</button> -->
-			<div id="healthInfo" class="infoline">...</div>
+			<!-- <div id="healthInfo" class="infoline">...</div> -->
 		</div>
 
 		<div class="span3">
@@ -24,7 +24,7 @@
 			<!-- <button onclick="setBambooStatus('successful');">Ok</button>
 			<button onclick="setBambooStatus('building');">Building</button>
 			<button onclick="setBambooStatus('failed');">Failed</button> -->
-			<div id="bambooInfo" class="infoline">...</div>
+			<!-- <div id="bambooInfo" class="infoline">...</div> -->
 		</div>
 	</div>
 
@@ -40,21 +40,22 @@
 <button id="btnResetOfficeHours" onclick="overruleOfficeHours(false);" style="display:NONE">reset to OfficeHours</button>
 <button onclick="quitAll();">Quit process</button> -->
 <button onclick="allDisco();">Don't Press</button>
-<form action="">
-	<input type="radio" name="wav" checked="checked" value="gong" id="gong"><label for="gong">Standup</label><br>
-	<input type="radio" name="wav" value="beep" id="beep"><label for="beep">Buzz</label><br>
-	<input type="radio" name="wav" value="cantpublish" id="cantpublish"><label for="cantpublish">Can't Publish</label><br>
-	<input type="radio" name="wav" value="chewie" id="chewie"><label for="chewie">Roar</label><br>
-	<input type="radio" name="wav" value="helpme" id="helpme"><label for="helpme">Help Me</label><br>
-	<input type="radio" name="wav" value="badoempatts" id="badoempatts"><label for="badoempatts">Joke</label><br>
-	<input type="radio" name="wav" value="superpadoem" id="superpadoem"><label for="superpadoem">Phil</label><br>
-	<input type="radio" name="wav" value="horn" id="horn"><label for="horn">Horn</label><br>
-	<input type="radio" name="wav" value="order66" id="order66"><label for="order66">Execute</label><br>
-	<input type="radio" name="wav" value="lightsaber" id="lightsaber"><label for="lightsaber">On</label><br>
-	<input type="radio" name="wav" value="cricket" id="cricket"><label for="cricket">Quiet</label><br>
-	<input type="radio" name="wav" value="ateam" id="ateam"><label for="ateam">Need Help?</label><br>
-	<button onclick="aWav();">Ring it</button>
-</form>
+<br>
+<select id="wavs">
+	<option value="gong">Standup</option>
+	<option value="beep">Buzz</option>
+	<option value="cantpublish">Can't Publish</option>
+	<option value="chewie">Roar</option>
+	<option value="helpme">Help Me</option>
+	<option value="badoempatts">Joke</option>
+	<option value="superpadoem">Phil</option>
+	<option value="horn">Horn</option>
+	<option value="order66">Execute</option>
+	<option value="lightsaber">On</option>
+	<option value="cricket">Quiet</option>
+	<option value="ateam">Need Help?</option>
+</select>
+<button onclick="aWav();">Ring it</button>
 
 <div id="generalInfo" class="infoline">...</div>
 <br>
@@ -62,8 +63,16 @@
 <h1 id="building" style="color:#006EFF;font-size: 20px">...</h1>
 <h1 id="failed" style="color:red;font-size: 20px">...</h1>
 
-
 <script type="text/javascript">
+
+	var input = document.getElementById("wavs");
+	input.addEventListener("keyup", function(event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		aWav();
+	}
+	});
+
 	var socket = io.connect();
 	
 	socket.on('lightBamboo', function (data) {
@@ -127,7 +136,8 @@
 	}
 
 	function aWav() {
-		var what = document.querySelector('input[name="wav"]:checked').value;
+		// var what = document.querySelector('input[name="wav"]:checked').value;
+		var what = document.getElementById("wavs").value;
 		event.preventDefault();
 		socket.emit('audioRequest', {what});
 	}
