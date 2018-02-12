@@ -13,6 +13,6 @@
 			"url": "https://wwws-ute3.klm.nl/gql/gql-check-in?query=query%20%7B%20content%20%7BdangerousGoods%20%7Btitle%20description%7D%7D%7D"
 		},
 		"timeout" : 7000, 
-		"voice": "slt" 
+		"voice": "rms" 
  	}
  }

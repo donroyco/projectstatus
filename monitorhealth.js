@@ -1,6 +1,4 @@
 // Config
-console.log('got this far');
-
 var socketPort = 8081;
 
 var tickTimeSeconds = 30;
@@ -36,8 +34,6 @@ io.sockets.emit('heading1', 'Health status for {projectName}');
 var display = require('./src/display');
 display.init(config);
 
-console.log('got this far2');
-
 display.allOff();
 
 var Speaker = require('./src/speaker');
@@ -58,8 +54,6 @@ var bambooStatusService = new BambooStatus(config.bamboo);
 //var bambooStatusService = new BambooStatus(nconf.get('projectname'));
 var HealthStatus = require('./src/healthstatusservice');
 var healthStatusService = new HealthStatus(config.health);
-
-console.log('got this far3');
 
 // Process ticks...
 var ticker = setInterval(function() {
