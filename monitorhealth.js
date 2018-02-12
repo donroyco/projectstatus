@@ -192,7 +192,7 @@ audioService.play('lightsaber');
 process.on('SIGINT', function() {
 	// on ctrl-c, switch all off
 	display.allOff();
-	console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
+	console.log( "\nGracefully shutting down from Ctrl-C" );
 	process.exit(0);
   });
 
