@@ -19,7 +19,7 @@ AudioService.prototype = {
 			}
 			console.log('playing ', command);
 
-			var exec = require('child_process').execSync;
+			var exec = require('child_process').exec;
 			try {
 				exec(command, function(error, stdout, stderr) {});
 			} catch (e) {
