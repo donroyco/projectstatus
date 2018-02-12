@@ -180,7 +180,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 console.log("Healthcheck for project: ", nconf.get('projectname'));
-speaker.say('Bluey two point zero.');
+speaker.say('Bluey 2.0');
 audioService.play('lightsaber');
 
 process.on('SIGINT', function() {
