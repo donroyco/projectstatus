@@ -24,7 +24,8 @@ echo "SUBSYSTEM==\"usb\", ATTR{idVendor}==\"20a0\", ATTR{idProduct}==\"41e5\", M
 
 ## Speech
 ```
-sudo apt-get install flite```
+sudo apt-get install flite
+```
  is required for speech on RPI3
 
 ## Functionality: 2 statuslights
