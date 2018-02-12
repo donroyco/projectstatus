@@ -187,7 +187,7 @@ io.sockets.on('connection', function (socket) {
 
 console.log("Healthcheck for project: ", nconf.get('projectname'));
 speaker.say('Bluey two point zero.');
-audioService.play('beep');
+audioService.play('lightsaber');
 
 process.on('SIGINT', function() {
 	// on ctrl-c, switch all off
