@@ -110,7 +110,6 @@ function inOfficeHours() {
 }
 
 function processBambooStatus(bamboo) {
-	console.log(bamboo);
 	if (lastBambooStatus !== bamboo.status && bamboo.status.indexOf('failed') !== -1) {
 		audioService.play('beep');
 	}
