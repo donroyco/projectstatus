@@ -6,7 +6,7 @@ var q = require('q');
 var lampBamboo, lampHealth;
 
 var defaultTick = 200;
-var shortTick = 300;
+var shortTick = 250;
 
 module.exports = {
 	init: init,
