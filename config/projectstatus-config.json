@@ -6,7 +6,7 @@
 			"lampDeviceNumber": 0,
 			"key": "BW", 
 			"url": "https://bamboo.devnet.klm.com/telemetry.action?filter=project&projectKey=", 
-			"mostImportantPlan": "BW_AVSH" 
+			"mostImportantPlan": "BW-AVSH" 
 		},
 		"health": {
 			"lampDeviceNumber": 1,

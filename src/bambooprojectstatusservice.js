@@ -4,11 +4,12 @@ var requestP = require('request-promise');
 var q = require('q');
 let cheerio = require('cheerio')
 let plansToIgnore = ['BW-BWAPINIG', 'BW-AE2ENIG'];
+let MIP = '';
  
 var BambooStatus = function (config) {
     this.bambookey = config.key;
     this.bambooURL = config.url;
-    this.bambooMostImportantPlan = config.mostImportantPlan;
+    MIP = config.mostImportantPlan;
 }
 
 // properties and methods
@@ -17,6 +18,8 @@ BambooStatus.prototype = {
         var defer = q.defer();
 
         var lastStatus = 'unknown';
+        var whatIstheMostImportantPlan = this.bambooMostImportantPlan;
+        
         // see if building
         requestP(uriWithOptionForJason(`${this.bambooURL}${this.bambookey}`))
         .then(function (html) {
@@ -44,7 +47,7 @@ BambooStatus.prototype = {
                     if (planNames[planCode] === undefined) {
                         planNames[planCode] = {"planName": planName,
                         "status": "failed"}; 
-                        if (planCode === this.bambooMostImportantPlan) {
+                        if (planCode === MIP) {
                             isMostImportantPlanFailed = true;
                         }
                         isFailed = true;
