@@ -42,8 +42,8 @@
 		document.getElementById("generalInfo").innerHTML = data;
 	});
 	
-	socket.on('heading1', function (data) {
-		document.getElementById("heading1").innerHTML = data;
+	socket.on('projectname', function (data) {
+		document.getElementById("heading1").innerHTML = "Health status for " + data;
 	});
 	
 	socket.on('allOff', function (data) {

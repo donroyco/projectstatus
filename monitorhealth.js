@@ -27,9 +27,9 @@ nconf.argv()
    .load();
 
 var config = nconf.get('config');
-var projectName =config.projectname;
+var projectName =nconf.get('projectname');
 
-io.sockets.emit('heading1', 'Health status for {projectName}');
+io.sockets.emit('projectname', projectName );
 
 var display = require('./src/display');
 display.init(config);
@@ -64,8 +64,8 @@ var ticker = setInterval(function() {
 
 function update() {
 
-	io.sockets.emit('generalInfo', 'Checking Project Status');	
-	io.sockets.emit('heading1', 'Health status for ' + projectName);
+	io.sockets.emit('generalInfo', 'Checking Project Status');
+	io.sockets.emit('projectname', projectName );
 	
 	if (inOfficeHours()) {
 		if (isAllOff) {

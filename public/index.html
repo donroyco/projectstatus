@@ -77,7 +77,6 @@
 	
 	socket.on('lightBamboo', function (data) {
 		document.getElementById("bambooStatusIndicator").className = data.status;
-		console.log('bamboostatus', data);
 		// document.getElementById("bambooInfo").innerHTML = data.info;
 	});
 	
@@ -90,8 +89,8 @@
 		document.getElementById("generalInfo").innerHTML = data;
 	});
 	
-	socket.on('heading1', function (data) {
-		document.getElementById("heading1").innerHTML = data;
+	socket.on('projectname', function (data) {
+		document.getElementById("heading1").innerHTML = "Health status for " + data;
 	});
 	
 	function updateNow() {
