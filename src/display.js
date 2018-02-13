@@ -29,7 +29,7 @@ function setBambooStatus(status) {
 		lampBamboo.set('#00A1DE');
 	}
 	if (status === 'failed') {
-		lampBamboo.set('#EE1010');
+		lampBamboo.set('#DD0040');
 	}
 	if (status === 'failedMIP') {
 		lampBamboo.set('#FF0000');
