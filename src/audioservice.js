@@ -17,7 +17,6 @@ AudioService.prototype = {
 			if (errorCommand) {
 				return;
 			}
-			console.log('playing ', command);
 
 			var exec = require('child_process').exec;
 			try {
