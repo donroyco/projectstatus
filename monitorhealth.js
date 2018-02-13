@@ -1,5 +1,4 @@
 // Config
-
 var socketPort = 8081;
 
 var tickTimeSeconds = 30;
@@ -17,41 +16,44 @@ server.listen(socketPort);
 app.use(express.static('public'));		
 
 // Configuration
+var defaultConfig = './config/projectstatus-config.json';
+if (process.argv.length === 3) {
+	defaultConfig = './config/' + process.argv[2] + '.json';
+};
 var nconf = require('nconf');
 nconf.argv()
    .env()
-   .file({ file: 'projectstatus-config.json' })
+   .file({ file: defaultConfig })
    .load();
 
-var projectName = nconf.get('projectname');
-
+var config = nconf.get('config');
+var projectName =config.projectname;
 
 io.sockets.emit('heading1', 'Health status for {projectName}');
 
-
-var display = require('./display');
-display.init(nconf.get('config'));
+var display = require('./src/display');
+display.init(config);
 
 display.allOff();
 
-var Speaker = require('./speaker');
-var speaker = new Speaker(nconf.get('config'));
+var Speaker = require('./src/speaker');
+var speaker = new Speaker(config);
 
-var Gong = require('./gong');
-var gong = new Gong();
+var AudioService = require('./src/audioservice');
+var audioService = new AudioService();
 
 var isAllOff = false;
-var overruleOfficeHours = false;
+var overruleOfficeHours = config.overruleOfficeHours || false;
 
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
 
-var BambooStatus = require('./bambooprojectstatusservice');
-var bambooStatusService = new BambooStatus(nconf.get('config'));
+var BambooStatus = require('./src/bambooprojectstatusservice');
+var bambooStatusService = new BambooStatus(config.bamboo);
 //var BambooStatus = require('./bamboostatusservice');
 //var bambooStatusService = new BambooStatus(nconf.get('projectname'));
-var HealthStatus = require('./healthstatusservice');
-var healthStatusService = new HealthStatus(nconf.get('config'));
+var HealthStatus = require('./src/healthstatusservice');
+var healthStatusService = new HealthStatus(config.health);
 
 // Process ticks...
 var ticker = setInterval(function() {
@@ -63,7 +65,7 @@ var ticker = setInterval(function() {
 function update() {
 
 	io.sockets.emit('generalInfo', 'Checking Project Status');	
-	io.sockets.emit('heading1', 'Health status for ' + nconf.get('projectname'));
+	io.sockets.emit('heading1', 'Health status for ' + projectName);
 	
 	if (inOfficeHours()) {
 		if (isAllOff) {
@@ -107,17 +109,15 @@ function inOfficeHours() {
 	return isTimeOK && !isWeekend;
 }
 
-function processBambooStatus(bambooStatus) {
-
-	if (lastBambooStatus !== bambooStatus.value && bambooStatus.value.toLowerCase() === 'failed') {
-		display.buzz();
-		// Speak about buildbreaker and stroepiewaffels here
-		console.log('stroepiewaffels by ', bambooStatus.info);
+function processBambooStatus(bamboo) {
+	if (lastBambooStatus !== bamboo.status && bamboo.status.indexOf('failed') !== -1) {
+		audioService.play('beep');
 	}
-	lastBambooStatus = bambooStatus.value;
-	display.setBambooStatus(bambooStatus.value);
+	lastBambooStatus = bamboo.status;
+	display.setBambooStatus(bamboo.status);
 
-	io.sockets.emit('lightBamboo', bambooStatus);	
+	io.sockets.emit('lightBamboo', bamboo);	
+	io.sockets.emit('buildstatus', bamboo.planstatus);	
 }
 
 function processHealthStatus(healthStatus) {
@@ -149,12 +149,8 @@ io.sockets.on('connection', function (socket) {
 		display.allDisco();
 	}); 
 
-	socket.on('aBuzz', function (data) {
-		display.buzz();
-	}); 
-
-	socket.on('aGong', function (data) {
-		gong.play(data.what);
+	socket.on('audioRequest', function (data) {
+		audioService.play(data.what);
 	}); 
 
 	socket.on('sayText', function (data) {
@@ -183,7 +179,15 @@ io.sockets.on('connection', function (socket) {
 });
 
 console.log("Healthcheck for project: ", nconf.get('projectname'));
-speaker.say('Hello, my name is Bluey');
-display.buzz();
+speaker.say('Bluey 2.0');
+audioService.play('lightsaber');
+
+process.on('SIGINT', function() {
+	// on ctrl-c, switch all off
+	display.allOff();
+	console.log( "\nGracefully shutting down from Ctrl-C" );
+	process.exit(0);
+  });
+
 
 update();

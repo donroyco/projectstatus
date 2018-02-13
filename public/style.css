@@ -1,6 +1,6 @@
 body {
 	margin: 50px 50px;
-	background: #fff;
+	background: rgb(0, 0, 0);
 	font-family: arial;
     color: #2dbaf3;
 }
@@ -17,8 +17,16 @@ body.status {
 	margin: 5px;
 	background: #000;
 	font-family: arial;
+<<<<<<< HEAD
     color: #000;
     padding: 0;
+=======
+    color: #F00;
+	padding: 0;
+}
+body.status h1{
+	line-height: 55px;
+>>>>>>> blinkstick
 }
 
 li { 
@@ -31,6 +39,7 @@ button {
     font-size: 16px;
     color: white;
     background-color: #2dbaf3;
+    border: 0;
 }
 h1 {
 	font-size: 40px;
@@ -70,47 +79,68 @@ input {
 
 #bambooStatusIndicator,
 #healthStatusIndicator {
-	width: 30px;
-	height: 30px;
-	border: 1px solid grey;
+	background-color: #000;
+	width: 50px;
+	height: 50px;
+	border: 2px solid #fff;
 	border-radius: 50%;
 	display: inline-block;
-    top: 7px;
-    position: relative;	
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 #bambooStatusIndicator.successful,
 #healthStatusIndicator.up {
-	background: url(StatusGreen.png);
-	background-size: 99%;
-	background-repeat: no-repeat;
+	background-image: url(images/statusgreen.svg);
 }
 #bambooStatusIndicator.building {
-	background: url(StatusBlue.png);
-	background-size: 99%;
-	background-repeat: no-repeat;
+	background-image: url(images/statusblue.svg);
 }
 #bambooStatusIndicator.error,
 #healthStatusIndicator.error {
-	background: url(StatusPurple.png);
-	background-size: 99%;
-	background-repeat: no-repeat;
+	background-image: url(images/statuspurple.svg);
 }
 #healthStatusIndicator.shaky,
 #bambooStatusIndicator.nightly {
-	background: #ffff00;
+	background-image: url(images/statusyellow.svg);
 }
+
 #bambooStatusIndicator.failed, 
 #healthStatusIndicator.down {
-	background: url(StatusRed.png);
-	background-size: 99%;
-	background-repeat: no-repeat;
+	background-image: url(images/statusred.svg);
 }
 
 #bambooStatusIndicator.disco, 
 #healthStatusIndicator.disco {
-	background: url(statusdisco.gif);
-	background-size: 99%;
-	background-repeat: no-repeat;
+	animation: discoStatus 4s infinite ease-in-out;
+}
+
+/* Disco animation */
+@keyframes discoStatus {
+	0% {
+		background-image: url(images/statusred.svg);
+	}
+	14% {
+		background-image: url(images/statusorange.svg);
+	}
+	28% {
+		background-image: url(images/statusyellow.svg);
+	}
+	42% {
+		background-image: url(images/statusgreen.svg);
+	}
+	56% {
+		background-image: url(images/statusaqua.svg);
+	}
+	70% {
+		background-image: url(images/statusblue.svg);
+	}
+	84% {
+		background-image: url(images/statuspurple.svg);
+	}
+	100% {
+		background-image: url(images/statusred.svg);
+	}
 }
 
 .beamer #bambooStatusIndicator,

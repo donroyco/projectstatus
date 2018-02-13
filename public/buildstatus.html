@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+	<title>ProjectHealth</title>
+	
+	<script src="socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="bootstrap-responsive.css">
+
+  </head>
+  <body class="status">
+		<h1 id="building" style="color:#006EFF;font-size: 60px">...</h1>
+		<h1 id="failed" style="color:red;font-size: 60px">...</h1>
+
+<script type="text/javascript">
+	var socket = io.connect();
+	socket.emit('updateNow', {});
+	socket.on('buildstatus', function (data) {
+		var plansFailed = '', plansBuilding = '';
+		Object.keys(data).forEach(key => {
+			if (data[key].status === 'failed') {
+				plansFailed = plansFailed + data[key].planName + "<br>";
+			}
+			if (data[key].status === 'building') {
+				plansBuilding = plansBuilding + data[key].planName + "<br>";
+			}
+		});
+		document.getElementById("building").innerHTML = plansBuilding;
+		document.getElementById("failed").innerHTML = plansFailed;
+
+	});
+	
+</script>
+</body>
+</html>

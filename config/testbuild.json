@@ -1,0 +1,17 @@
+{"projectname": "BW-DEF", 
+	"config": {
+		 "bamboo": {
+			"lampDeviceNumber": 0,
+			"key": "BW", 
+			"url": "http://localhost:8081/mock/bambooOneBuilding.html?a=", 
+			"mostImportantPlan": "BW_AVSH" 
+		},
+		 "health": {
+			"lampDeviceNumber": 1,
+			"url": "http://localhost:8081/mock/hostmonitorOK.html"
+		},
+		 "timeout" : 7000, 
+		 "overruleOfficeHours": true,
+		 "voice": "slt" 
+ 	}
+ }
