@@ -110,8 +110,14 @@ function inOfficeHours() {
 }
 
 function processBambooStatus(bamboo) {
-	if (lastBambooStatus !== bamboo.status && bamboo.status.indexOf('failed') !== -1) {
-		audioService.play('beep');
+	if (lastBambooStatus !== bamboo.status) {
+		if (bamboo.status === 'failed') {
+			audioService.play('roar');
+		} else if (bamboo.status === 'failedMIP') {
+			audioService.play('beep');
+		} else {
+			audioService.play('brrr');
+		}
 	}
 	lastBambooStatus = bamboo.status;
 	display.setBambooStatus(bamboo.status);
