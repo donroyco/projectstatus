@@ -23,7 +23,7 @@ function init(config) {
 
 function setBambooStatus(status) {
 	if (status === 'successful') {
-		lampBamboo.set('#00DD00');
+		lampBamboo.set('#00BB00');
 	}
 	if (status === 'building') {
 		lampBamboo.set('#00A1DE');
@@ -41,7 +41,7 @@ function setBambooStatus(status) {
 
 function setHealthStatus(status) {
 	if (status === 'up') {
-		lampHealth.set('#00EE00');
+		lampHealth.set('#00BB00');
 	}
 	if (status === 'shaky') {
 		lampHealth.set('yellow');
