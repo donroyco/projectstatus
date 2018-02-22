@@ -5,7 +5,7 @@ var q = require('q');
 let cheerio = require('cheerio')
 
 var Hostmonitor = function (config) {
-    this.hostMonitorURL = config.hostMonitorURL;
+    this.hostMonitorURL = config.hostmonitorurl;
     this.timeout = config.timeout;
 }
 // properties and methods
@@ -21,37 +21,29 @@ Hostmonitor.prototype = {
                   resolveWithFullResponse: true,
                   headers: { 'User-Agent': 'Request-Promise', 'Accept': 'text/html'}
         })
-        .then(function (html) {
-            var $ = cheerio.load(html);
+        .then(function (result) {
+            var $ = cheerio.load(result.body);
 
-            var hostNames = {};
+            var hostNames = [];
             var isOK = true;
-            console.log($('.Good').length);
-            console.log('anyength', $('tr').toArray()); 
-            $('tr').each(function() {
-                console.log($('good', this));
-            }); 
-            console.log('Goodlength', $('tbody tr.good').length); 
-            $('tbody tr.Good').each(function(i, plan){    
+            $('tr.Good').each(function(i, plan){    
                 var hostName = $(this).find('a').text();
                 hostNames.push({"hostName": hostName, "status": "Good"});  
             });
-            console.log('Badlength', $('tr.Bad').length); 
             $('tr.Bad').each(function(i, plan){   
                 var hostName = $(this).find('a').text();
                 hostNames.push({"hostName": hostName, "status": "Bad"});
                 isOK = false;
             });
-            console.log(hostNames);
             if (isOK) { 
-                defer.resolve({'value': 'up', 'info': hostNames});
+                defer.resolve({'value': 'up', 'services': hostNames});
             } else {
-                defer.resolve({'value': 'down', 'info': 'down'});
+                defer.resolve({'value': 'down', 'services': hostNames});
             }
         })
         .catch(function (err) {
             console.log(err.message);
-            defer.resolve({'value':'error', 'info': err.message});
+            defer.resolve({'value':'error', 'error': err.message});
         });
 
         return defer.promise;

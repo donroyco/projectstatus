@@ -13,7 +13,9 @@ module.exports = {
     setBambooStatus: setBambooStatus,
     setHealthStatus: setHealthStatus,
     allOff: allOff, 
-    allDisco: allDisco
+	allDisco: allDisco,
+	alertHostMonitor: alertHostMonitor,
+	notifyHostMonitor: notifyHostMonitor
 };
 
 function init(config) {
@@ -54,6 +56,7 @@ function setHealthStatus(status) {
 	}
 }
 
+
 function allOff() {
 	lampBamboo.set('#000000', true);
 	lampHealth.set('#000000', true)
@@ -63,27 +66,27 @@ function allDisco() {
 	var lastHealthColor = lampHealth.currentColor;
 	var lastBambooColor = lampBamboo.currentColor;
 	console.log('disco requested');
-
+	
 	let disco = blinkBambooRandom()
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(blinkBambooRandom)
-				.then(blinkServerRandom)
-				.then(() => {
-					lampBamboo.set(lastBambooColor || '#000000')
-					lampHealth.set(lastHealthColor || '#000000')
-					});
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(blinkBambooRandom)
+	.then(blinkServerRandom)
+	.then(() => {
+		lampBamboo.set(lastBambooColor || '#000000')
+		lampHealth.set(lastHealthColor || '#000000')
+	});
 }
 
 function blinkBambooRandom() {
@@ -93,6 +96,35 @@ function blinkBambooRandom() {
 
 function blinkServerRandom() {
 	lampHealth.set(randomColor(lampHealth.currentColor), true);
+    return new Promise((resolve) => setTimeout(resolve, shortTick));
+}
+
+function notifyHostMonitor() {
+	lampHealth.set('#FF0000');
+}
+
+function alertHostMonitor() {
+	console.log('Alert requested');
+
+	let disco = blinkBambooRandom()
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'))
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'))
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'))
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'))
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'))
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'))
+				.then(blinkHealth('#FF0000'))
+				.then(blinkHealth('#000000'));
+}
+
+function blinkHealth(color) {
+	lampHealth.set(color, true);
     return new Promise((resolve) => setTimeout(resolve, shortTick));
 }
 

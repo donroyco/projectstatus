@@ -47,6 +47,7 @@ var overruleOfficeHours = config.overruleOfficeHours || false;
 
 var lastBambooStatus = 'unknown';
 var lastHealthStatus = 'unknown';
+var lastHostMonitorStatus = 'unknown';
 
 var BambooStatus = require('./src/bambooprojectstatusservice');
 var bambooStatusService = new BambooStatus(config.bamboo);
@@ -54,6 +55,9 @@ var bambooStatusService = new BambooStatus(config.bamboo);
 //var bambooStatusService = new BambooStatus(nconf.get('projectname'));
 var HealthStatus = require('./src/healthstatusservice');
 var healthStatusService = new HealthStatus(config.health);
+
+var HostMonitorStatus = require('./src/hostmonitorservice');
+var hostMonitorService = new HostMonitorStatus(config.health);
 
 // Process ticks...
 var ticker = setInterval(function() {
@@ -78,6 +82,9 @@ function update() {
 
 		healthStatusService.getHealthStatus()
 		.then(processHealthStatus); 
+
+		hostMonitorService.getMonitorStatus()
+		.then(processHostMonitorStatus); 
 
 	} else {
 
@@ -132,6 +139,22 @@ function processHealthStatus(healthStatus) {
 	display.setHealthStatus(healthStatus.value);
 
 	io.sockets.emit('lightHealth', healthStatus);	
+}
+
+function processHostMonitorStatus(status) {
+
+	if (status.value !== "up") {
+		// OK, Hostmonitor says LIVE problems
+		if (lastHostMonitorStatus !== status.value)  {
+			audioService.play('hostmonitor');
+			display.alertHostMonitor();
+		} else {
+			display.notifyHostMonitor();
+
+		}
+		io.sockets.emit('lightHealth', {value: 'down'});	
+	}
+	lastHostMonitorStatus = status.value;
 }
 
 io.sockets.on('connection', function (socket) {

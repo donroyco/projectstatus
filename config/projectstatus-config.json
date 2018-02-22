@@ -10,9 +10,10 @@
 		},
 		"health": {
 			"lampDeviceNumber": 1,
-			"url": "https://wwws-ute3.klm.nl/gql/gql-check-in?query=query%20%7B%20content%20%7BdangerousGoods%20%7Btitle%20description%7D%7D%7D"
+			"url": "https://wwws-ute3.klm.nl/gql/gql-check-in?query=query%20%7B%20content%20%7BdangerousGoods%20%7Btitle%20description%7D%7D%7D",
+			"hostmonitorurl": "http://hostmonitor.klm.com/index_blueweb.htm",
+			"timeout" : 7000
 		},
-		"timeout" : 7000, 
 		"voice": "rms" 
  	}
  }

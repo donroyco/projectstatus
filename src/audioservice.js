@@ -8,10 +8,10 @@ var AudioService = function () {
 AudioService.prototype = {
     play: function (what) {
 			var extension = 'mp3';
+			// dont play wavs!!! PI streams the digital noise to the speaker!
 			if (fs.existsSync(`./sounds/${what}.wav`)) {
 				extension = 'wav';
 			}
-
 			var command = `aplay ./sounds/${what}.${extension}`;
 
 			if (errorCommand) {

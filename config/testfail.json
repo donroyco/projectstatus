@@ -8,9 +8,10 @@
 		},
 		 "health": {
 			"lampDeviceNumber": 1,
-			"url": "https://IAMNOTAVAILABLE"
+			"url": "https://IAMNOTAVAILABLE",
+			"hostmonitorurl": "http://localhost:8081/mock/hostmonitorFailed.html",
+			"timeout" : 7000
 		},
-		 "timeout" : 7000, 
 		 "overruleOfficeHours": true,
 		 "voice": "slt" 
  	}
