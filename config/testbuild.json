@@ -8,9 +8,10 @@
 		},
 		 "health": {
 			"lampDeviceNumber": 1,
-			"url": "http://localhost:8081/mock/hostmonitorOK.html"
+			"url": "http://localhost:8081/mock/hostmonitorOK.html",
+			"hostmonitorurl": "http://hostmonitor.klm.com/index_blueweb.htm",
+			"timeout" : 7000
 		},
-		 "timeout" : 7000, 
 		 "overruleOfficeHours": true,
 		 "voice": "slt" 
  	}
