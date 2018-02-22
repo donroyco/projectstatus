@@ -14,7 +14,6 @@ Hostmonitor.prototype = {
         
         var defer = q.defer();
         
-        console.log(this.hostMonitorURL);
         requestP({uri: this.hostMonitorURL,
                   json: true,
                   timeout: this.timeout,
