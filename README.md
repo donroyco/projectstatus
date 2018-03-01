@@ -6,6 +6,7 @@ The dummy_onoff_nodemodule can replace the onoff module if you have no GPIO on y
 ## Requirements
 sudo apt-get install libusb-1.0-0-dev is required for the USB on RPI3
 Or, sudo apt-get install libudev-dev -y
+Or, sudo apt-get install build-essential libudev-dev 
 
 ## Update of old Node JS
 ```
